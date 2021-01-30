@@ -1,9 +1,21 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
 const express = require('express');
 const authRoutes = require('./routes/authRoutes');
+const mongoose = require('mongoose');
 
 const app = express();
-const portNumber = 3000;
-app.listen(portNumber);
+
+mongoose.connect(process.env.dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
+.then(result => {
+    return app.listen(process.env.PORT);
+}).then(() => {
+    console.log("App is running");
+}).catch(err => {
+    console.log(err);
+});
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
