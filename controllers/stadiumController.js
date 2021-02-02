@@ -91,7 +91,6 @@ const verifyDltStadium = () => {
     return [
         body('name').notEmpty().withMessage('Name is required').bail()
         .custom(async (val) => {
-            oldname = val;
             const stadium = await Stadium.findOne({name: val});
             if (stadium) {
                 return true;
