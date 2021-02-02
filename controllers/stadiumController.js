@@ -1,6 +1,6 @@
 const { body, validationResult } = require('express-validator');
 const lod = require('lodash');
-const Stadium = require('../models/Stadium');
+const {Stadium} = require('../models/Stadium');
 
 const verifyAddStadium = () => {
     return [

@@ -1,6 +1,6 @@
 const { body, validationResult } = require('express-validator');
 const lod = require('lodash');
-const Team = require('../models/Team');
+const {Team} = require('../models/Team');
 
 const verifyAddTeam = () => {
     return [
