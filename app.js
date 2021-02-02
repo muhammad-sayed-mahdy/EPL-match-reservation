@@ -23,9 +23,9 @@ app.use(express.json());
 app.use(passport.initialize());
 
 app.use('/api', require('./routes/api/apiAuthRoutes'));
-app.use('/api', require('./routes/api/APIUserRoutes'));
-app.use('/api', require('./routes/api/apiStadiumRoutes'));
-app.use('/api', require('./routes/api/apiTeamRoutes'));
+app.use('/api/user', require('./routes/api/APIUserRoutes'));
+app.use('/api/stadium', require('./routes/api/apiStadiumRoutes'));
+app.use('/api/team', require('./routes/api/apiTeamRoutes'));
 
 app.use(require('./routes/authRoutes'));
 

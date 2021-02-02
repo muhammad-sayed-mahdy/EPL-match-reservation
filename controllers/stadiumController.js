@@ -2,7 +2,7 @@ const { body, validationResult } = require('express-validator');
 const lod = require('lodash');
 const {Stadium} = require('../models/Stadium');
 
-const verifyAddStadium = () => {
+const verifyStore = () => {
     return [
         body('name').notEmpty().withMessage('Name is required').bail()
         .custom(async (val) => {
@@ -17,7 +17,7 @@ const verifyAddStadium = () => {
     ];
 };
 
-const addStad_post = (req, res) => {
+const store = (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
     {
@@ -32,7 +32,7 @@ const addStad_post = (req, res) => {
     });
 };
 
-const verifyUpdStadium = () => {
+const verifyUpdate = () => {
     var oldname;
     return [
         body('name').notEmpty().withMessage('Name is required').bail()
@@ -46,7 +46,7 @@ const verifyUpdStadium = () => {
         }),
         body('newname')
         .custom(async (val) => {
-            if(!(oldname == val))
+            if(oldname !== val)
             {
                 const stadium = await Stadium.findOne({name: val});
                 if (!stadium) {
@@ -59,7 +59,7 @@ const verifyUpdStadium = () => {
     ];
 };
 
-const updStad_put = async (req, res) => {
+const update = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
     {
@@ -82,12 +82,12 @@ const updStad_put = async (req, res) => {
             return;
         }
     });
-    res.status(200).json("Updated Sucessfully")
+    res.status(200).json("Updated Sucessfully");
 
 };
 
 
-const verifyDltStadium = () => {
+const verifyDestroy = () => {
     return [
         body('name').notEmpty().withMessage('Name is required').bail()
         .custom(async (val) => {
@@ -100,7 +100,7 @@ const verifyDltStadium = () => {
     ];
 };
 
-const dltStad_delete = async (req, res) => {
+const destroy = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
     {
@@ -118,16 +118,16 @@ const dltStad_delete = async (req, res) => {
             return;
         }
     });
-    res.status(200).json("deleted Sucessfully")
+    res.status(200).json("deleted Sucessfully");
 
 };
 
 
 module.exports = {
-    verifyAddStadium,
-    verifyUpdStadium,
-    verifyDltStadium,
-    addStad_post,
-    updStad_put,
-    dltStad_delete
+    verifyStore,
+    verifyUpdate,
+    verifyDestroy,
+    store,
+    update,
+    destroy
 };
