@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { isEmail } = require('validator');
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -13,11 +14,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 8,
-        select: false
+        // select: false
     },
     role: {
         type: String,
         required: true,
+        default: 'fan',
         enum: ['admin', 'manager', 'fan']
     },
     fname: {
@@ -39,7 +41,17 @@ const userSchema = new mongoose.Schema({
         type: Date
     }
 
+}, {timestamps: true});
+
+userSchema.pre('save', async function (next) {
+    const salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
 });
+
+userSchema.methods.isValidPassword = function(password) {
+    return bcrypt.compare(password, this.password);
+};
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

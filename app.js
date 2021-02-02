@@ -3,12 +3,12 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const express = require('express');
-const authRoutes = require('./routes/authRoutes');
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 const app = express();
 
-mongoose.connect(process.env.dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(process.env.dbURI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true})
 .then(result => {
     return app.listen(process.env.PORT);
 }).then(() => {
@@ -19,9 +19,11 @@ mongoose.connect(process.env.dbURI, {useNewUrlParser: true, useUnifiedTopology: 
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+app.use(passport.initialize());
 
-app.use(authRoutes);
+app.use(require('./routes/authRoutes'));
+app.use('/api', require('./routes/api/apiAuthRoutes'));
 
 app.use((req, res) => {
     res.status(404).render('404');
