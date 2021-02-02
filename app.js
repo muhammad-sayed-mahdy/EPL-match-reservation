@@ -25,6 +25,7 @@ app.use(passport.initialize());
 app.use(require('./routes/authRoutes'));
 app.use('/api', require('./routes/api/apiAuthRoutes'));
 app.use('/api', require('./routes/api/apiStadiumRoutes'));
+app.use('/api', require('./routes/api/apiTeamRoutes'));
 
 app.use((req, res) => {
     res.status(404).render('404');
