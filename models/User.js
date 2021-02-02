@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 8,
-        // select: false
+        select: false
     },
     role: {
         type: String,
@@ -46,6 +46,15 @@ const userSchema = new mongoose.Schema({
 userSchema.pre('save', async function (next) {
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt);
+    next();
+});
+
+userSchema.pre('updateOne', async function (next) {
+    if (this._update.password)
+    {
+        const salt = await bcrypt.genSalt();
+        this._update.password = await bcrypt.hash(this._update.password, salt);
+    }
     next();
 });
 
