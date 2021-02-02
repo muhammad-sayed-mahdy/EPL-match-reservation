@@ -8,7 +8,7 @@ const passport = require('passport');
 
 const app = express();
 
-mongoose.connect(process.env.dbURI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true})
+mongoose.connect(process.env.dbURI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true,useFindAndModify:false})
 .then(result => {
     return app.listen(process.env.PORT);
 }).then(() => {
@@ -24,6 +24,7 @@ app.use(passport.initialize());
 
 app.use(require('./routes/authRoutes'));
 app.use('/api', require('./routes/api/apiAuthRoutes'));
+app.use('/api', require('./routes/api/apiStadiumRoutes'));
 
 app.use((req, res) => {
     res.status(404).render('404');
