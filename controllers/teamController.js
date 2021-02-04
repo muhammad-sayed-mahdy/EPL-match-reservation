@@ -2,7 +2,7 @@ const { body, validationResult } = require('express-validator');
 const lod = require('lodash');
 const {Team} = require('../models/Team');
 
-const verifyAddTeam = () => {
+const verifyStore = () => {
     return [
         body('name').notEmpty().withMessage('Name is required').bail()
         .custom(async (val) => {
@@ -15,7 +15,7 @@ const verifyAddTeam = () => {
     ];
 };
 
-const addTeam_post = (req, res) => {
+const store = (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
     {
@@ -30,7 +30,7 @@ const addTeam_post = (req, res) => {
     });
 };
 
-const verifyDltTeam = () => {
+const verifyDestroy = () => {
     return [
         body('name').notEmpty().withMessage('Name is required').bail()
         .custom(async (val) => {
@@ -43,7 +43,7 @@ const verifyDltTeam = () => {
     ];
 };
 
-const dltTeam_delete = async (req, res) => {
+const destroy = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty())
     {
@@ -61,13 +61,13 @@ const dltTeam_delete = async (req, res) => {
             return;
         }
     });
-    res.status(200).json("deleted Sucessfully")
+    res.status(200).json("deleted Sucessfully");
 
 };
 
 module.exports = {
-    verifyAddTeam,
-    verifyDltTeam,
-    addTeam_post,
-    dltTeam_delete
+    verifyStore,
+    verifyDestroy,
+    store,
+    destroy
 };

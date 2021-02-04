@@ -1,6 +1,6 @@
 const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
-const lod = require('lodash');
+const lo = require('lodash');
 
 const User = require('../models/User');
 
@@ -9,7 +9,7 @@ const signup_get = (req, res) => {
 };
 
 const createToken = (id) => {
-    return jwt.sign({id}, process.env.SECRET);
+    return jwt.sign({id}, process.env.SECRET, {expiresIn: '1d'});
 };
 
 const verifySignup = () => {
@@ -46,7 +46,7 @@ const verifySignup = () => {
 
         body('gender').optional().toUpperCase().isIn(['M', 'F']).withMessage("Gender should be either `M` or `F`"),
 
-        body('bdate').optional().isDate().withMessage('Birth date is not valid, it should have format "yyyy-mm-dd"')
+        body('bdate').optional().isDate().withMessage('Birth date should be a valid date following "yyyy/mm/dd" format')
     ];
 };
 
@@ -57,7 +57,7 @@ const signup_post = (req, res) => {
         res.status(400).json({errors: errors.array()});
         return;
     }
-    const data = lod.pick(req.body, ['email', 'password', 'fname', 'lname', 'city', 'gender', 'bdate']);
+    const data = lo.pick(req.body, ['email', 'password', 'fname', 'lname', 'city', 'gender', 'bdate']);
     User.create(data).then(user => {
         const token = createToken(user.id);
         res.json({id: user.id, token});
@@ -67,6 +67,7 @@ const signup_post = (req, res) => {
 };
 
 const me = (req, res) => {
+    req.user.__v = undefined;
     res.json({user: req.user});
 };
 
@@ -94,7 +95,7 @@ const login_post = async (req, res) => {
         return;
     }
     try {
-        const user = await User.findOne({email: req.body.email});
+        const user = await User.findOne({email: req.body.email}, {email:1, password:1});
         if (await user.isValidPassword(req.body.password)) {
             res.json({id: user.id, token: createToken(user.id)});
         } else {
