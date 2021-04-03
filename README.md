@@ -11,9 +11,15 @@ A web application for Match reservation system using Node.js
     ```shell
     node app.js
     ```  
+<<<<<<< HEAD
 
 ## Appendix
 1- Useful cammands:
 
     sudo systemctl start mongod
     sudo systemctl status mongod
+=======
+### Run Generator
+0. You should have `python3` installed with some packages like `faker` and `json` 
+1. `cd` into `generator` folder, then run `python nosql_generator.py`
+>>>>>>> 16c0851b5a07a5e2e85a06bd99c0647ab4c97577

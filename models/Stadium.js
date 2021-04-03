@@ -6,15 +6,15 @@ const stadiumSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    widht: {
+    width: {
         type: Number,
         required: true
     },
-    height: {
+    length: {
         type: Number,
         required: true
     }
 });
 
 const Stadium = mongoose.model('Stadium', stadiumSchema);
-module.exports = {Stadium, stadiumSchema};
+module.exports = { Stadium, stadiumSchema };
