@@ -11,3 +11,9 @@ A web application for Match reservation system using Node.js
     ```shell
     node app.js
     ```  
+
+## Appendix
+1- Useful cammands:
+
+    sudo systemctl start mongod
+    sudo systemctl status mongod
