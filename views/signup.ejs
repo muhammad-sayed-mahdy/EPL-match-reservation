@@ -6,50 +6,50 @@
 
     <form class="row g-3" method="POST" action="/api/signup">
       <div class="col-md-6">
-        <label for="inputEmail" class="form-label">Email</label>
-        <input type="email" class="form-control" id="inputEmail" name="email" >
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" required>
       </div>
       <div class="col-md-3">
-        <label for="inputPassword" class="form-label">Password</label>
-        <input type="password" class="form-control" id="inputPassword" name="password"  min="8">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password"  required min="8">
       </div>
       <div class="col-md-3">
-        <label for="password_confirmation" class="form-label">Confirm Password</label>
-        <input type="password" class="form-control" name="password_confirmation" id="password_confirmation"  min="8">
+        <label for="passwordConfirmation" class="form-label">Confirm Password</label>
+        <input type="password" class="form-control" name="passwordConfirmation" id="passwordConfirmation" required min="8">
       </div>
       <div class="col-md-6">
-        <label for="inputFname" class="form-label">First Name</label>
-        <input type="text" class="form-control" id="inputFname" name="fname" >
+        <label for="fname" class="form-label">First Name</label>
+        <input type="text" class="form-control" id="fname" name="fname" required>
       </div>
       <div class="col-md-6">
-        <label for="inputLname" class="form-label">Last Name</label>
-        <input type="text" class="form-control" id="inputLname" name="lname" >
+        <label for="lname" class="form-label">Last Name</label>
+        <input type="text" class="form-control" id="lname" name="lname" required>
       </div>
       <div class="col-md-12">
-        <label for="inputCity" class="form-label">City</label>
-        <input type="text" class="form-control" id="inputCity" name="city">
+        <label for="city" class="form-label">City</label>
+        <input type="text" class="form-control" id="city" name="city">
       </div>
 
       <div class="col-12">
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="M" name="gender">
+          <input class="form-check-input" type="radio" id="inlineCheckbox1" value="M" name="gender">
           <label class="form-check-label" for="inlineCheckbox1">Male</label>
         </div>
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="F" name="gender">
+          <input class="form-check-input" type="radio" id="inlineCheckbox2" value="F" name="gender">
           <label class="form-check-label" for="inlineCheckbox2">Female</label>
         </div>
       </div>
       <div class="col-12">
-        <label for="inputDate" class="form-label">Birth Date</label>
-        <input type="date" class="form-control" id="inputDate" name="bdate">
+        <label for="bdate" class="form-label">Birth Date</label>
+        <input type="date" class="form-control" id="bdate" name="bdate">
       </div>
       <div class="col-12">
         <button type="submit" class="btn btn-primary">Sign in</button>
       </div>
     </form>
   </div>
-  <script src="/js/signup.js"></script>
+  <script type="module" src="/js/signup.js"></script>
 </body>
 
 </html>
