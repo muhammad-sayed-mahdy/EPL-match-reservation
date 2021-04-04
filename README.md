@@ -11,6 +11,10 @@ A web application for Match reservation system using Node.js
     ```shell
     node app.js
     ```  
+    or
+    ```
+    nodemon app
+    ```
 ### Run Generator
 0. You should have `python3` installed with some packages like `faker` and `json` 
 1. `cd` into `generator` folder, then run `python nosql_generator.py`
