@@ -22,6 +22,12 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(passport.initialize());
 
+// To use bootstrap and jquery
+app.use('/css', express.static(path.join(_dirname, 'node_modules/bootstrap/dist/css')));
+app.use('/js', express.static(path.join(_dirname, 'node_modules/bootstrap/dist/js')));
+app.use('/js', express.static(path.join(_dirname, 'node_modules/jquery/dist')));
+
+
 app.use('/api', require('./routes/api/apiAuthRoutes'));
 
 app.use('/api/user', require('./routes/api/APIUserRoutes'));
