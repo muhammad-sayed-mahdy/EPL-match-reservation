@@ -5,7 +5,7 @@ const lo = require('lodash');
 const User = require('../models/User');
 
 const signup_get = (req, res) => {
-    res.render("signup");
+    res.render("signup", {title:"Signup"});
 };
 
 const createToken = (id) => {
