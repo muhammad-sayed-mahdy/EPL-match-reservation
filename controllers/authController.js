@@ -4,8 +4,14 @@ const lo = require('lodash');
 
 const User = require('../models/User');
 
+const MAX_AGE_IN_SEC = 60*60*24;
+
 const signup_get = (req, res) => {
     res.render("signup", {title:"Signup"});
+};
+
+const login_get = (req, res) => {
+    res.render("login", {title: "Login"});
 };
 
 const createToken = (id) => {
@@ -60,6 +66,7 @@ const signup_post = (req, res) => {
     const data = lo.pick(req.body, ['email', 'password', 'fname', 'lname', 'city', 'gender', 'bdate']);
     User.create(data).then(user => {
         const token = createToken(user.id);
+        res.cookie('token', token, { secure: true, httpOnly: true, maxAge: MAX_AGE_IN_SEC * 1000, sameSite: 'lax' });
         res.json({id: user.id, token});
     }).catch(error => {
         res.json(error);
@@ -97,7 +104,9 @@ const login_post = async (req, res) => {
     try {
         const user = await User.findOne({email: req.body.email}, {email:1, password:1});
         if (await user.isValidPassword(req.body.password)) {
-            res.json({id: user.id, token: createToken(user.id)});
+            const token = createToken(user.id);
+            res.cookie('token', token, { secure: true, httpOnly: true, maxAge: MAX_AGE_IN_SEC * 1000, sameSite: 'lax' });
+            res.json({id: user.id, token});
         } else {
             res.status(400).json({error: "Incorrect Password"});
         }
@@ -107,11 +116,18 @@ const login_post = async (req, res) => {
     }
 };
 
+const logout = (req, res) => {
+    res.clearCookie('token');
+    res.redirect('/');
+};
+
 module.exports = {
     signup_get,
+    login_get,
     verifySignup,
     signup_post,
     me,
     verifyLogin,
-    login_post
+    login_post,
+    logout
 };
