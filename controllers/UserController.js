@@ -64,7 +64,12 @@ const update = (req, res) => {
     });
 };
 
+const view_manager_profile = (req, res) =>{
+    res.render("manager_profile", {title:"Profile"});
+};
+
 module.exports = {
     verifyUpdate,
-    update
+    update,
+    view_manager_profile
 };
