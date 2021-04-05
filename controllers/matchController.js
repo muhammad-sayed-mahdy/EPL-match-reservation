@@ -3,28 +3,22 @@ const lod = require('lodash');
 const Match = require('../models/Match');
 const ObjectID = require('mongodb').ObjectID;
 
+//render home page
 const show_home = (req, res) => {
     res.render("home", {title:"Home"});
 };
 
+//retrieve all matches
 const show_matches = (req, res) =>{
-    Match.find()
+    Match.find().sort({createdAt:-1})
         .then((result)=>{
-            res.send(result);
+            res.render("home", {title:"Schedule", matches:result});
         })
         .catch((err)=>{
             console.log(err);
         });
 };
 
-
-// {"_id":"0d8fa4ae8adfb92e4d94d462","referee":"Lindsay Rose","matchTime":"1996-04-18T03:49:55.000Z",
-// "teams":{"_id":"606b294e3e1e12e4b8e01e4e","home":"Johnson-Tapia","away":"Werner PLC"},
-// "stadium":{"_id":"606b294e3e1e12e4b8e01e4f","name":"Jamesland 2","width":3,"length":2},
-// "linemen":{"_id":"606b294e3e1e12e4b8e01e50","first":"Maria Moody","second":"Michelle Johnson"},
-// "managerScheduled":"ac8f833313ffcdd8628824a6",
-// "reservations":[{"user_id":"c77c9cdf10ac9788300bee23","x_i":0,"y_i":1},{"user_id":"c9f3417f09177e45bcc5a617","x_i":1,"y_i":1},{"user_id":"ddb15b991f0b70b3a7181977","x_i":2,"y_i":0}]
-// }
 
 const add_match = (req, res) =>{
     const linemen_i = {
@@ -59,11 +53,9 @@ const add_match = (req, res) =>{
 
     match_i.save()
         .then((result)=>{
-            console.log("4");
             res.send(result);
         })
         .catch((err)=>{
-            console.log("5");
             console.log(err);
         });
 };

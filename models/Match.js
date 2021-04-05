@@ -84,7 +84,7 @@ const matchSchema = new mongoose.Schema({
         type: [reservationSchema]
         
     }
-});
+}, {timestamps:true});
 
 const Match = mongoose.model('Match', matchSchema);
 module.exports = Match;

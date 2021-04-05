@@ -1,8 +1,40 @@
 <%- include("./partials/head.ejs") %>
 <%- include("./partials/nav.ejs") %>
 
-<h2>Current Available Matches</h2>
+<% if (title == "Home") { %>
+    <h2>Welcome to EPL</h2>
+    <h3>Ahm 7aga el-3-pont</h3>
+    <% } %>
+
+<% if (title == "Schedule" && matches.length>0) { %>
+    <h2>Current Available Matches</h2>
+    <container class="my-class 
+                  d-flex 
+                  align-items-center 
+                  justify-content-center
+                  justify-content-sm-between
+                  flex-sm-row
+                  flex-column
+                  px-2">
+
+    <div class="list-group">
+        <% matches.forEach(match => { %>
+            <a href="#" class="list-group-item list-group-item-primary" aria-current="true">
+                <div class="d-flex w-100 justify-content-between">
+                    <h4>H: <%= match.teams.home %>  VS  A: <%= match.teams.away %></h4>
+                </div>
+                <p class="mb-1"><%= match.matchTime %></p>
+                <p class="mb-1">Stadium: <%= match.stadium.name %></p>                
+            </a>
+        <% }) %>
+        </div>
+        </container>
+<% } else { %>
+    <h3>There is nothing to display...</h3>
+    <% } %>
+        
+
 <ul class="list-group">
-    <li class="list-group-item list-group-item-primary">This is a primary list group item</li>
     
+            
 </ul>
