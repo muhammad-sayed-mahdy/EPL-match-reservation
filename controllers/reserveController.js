@@ -167,6 +167,21 @@ const cancelReserve_put = async (req, res) => {
 };
 
 
+const showReserve_get = async (req, res) => {
+
+    if(req.query.id ==undefined)
+    {
+        res.status(400).json({"Error":"id is required" });
+        return;
+    }
+
+    match = await Match.findOne({_id: req.query.id});
+    if (match) {
+        res.status(200).json({"reservedSeats":match.reservations});
+    }
+    res.status(400).json({"Error":"id does not exist"});
+
+};
 
 
 module.exports = {
@@ -174,4 +189,5 @@ module.exports = {
     verifyCancelReserve,
     reserve_post,
     cancelReserve_put,
+    showReserve_get
 };
