@@ -22,38 +22,33 @@ const show_matches = (req, res) =>{
 
 const add_match = (req, res) =>{
     const linemen_i = {
-        first: "line",
-        second:"man"
+        first: req.body.linemanFirst,
+        second:req.body.linemanFirst
     };
     const team_i = {
-        home: "team_home",
-        away: "team_away"
+        home: req.body.homeTeam,
+        away: req.body.awayTeam
     };
-    var objectId = new ObjectID();
-    const reservations_i={
-        user_id: objectId,
-        x_i: 10,
-        y_i:10
-    };
+    
     const stadium_i = {
-        name: "stad_x",
-        width:10,
-        length: 20
+        name: req.body.stadium,
+        width:req.body.stadWidth,
+        length:req.body.stadHeight
     };
     var objectId2 = new ObjectID();
+
     const match_i = new Match({
-        referee:"Ev",
+        referee:req.body.referee,
         linemen:linemen_i,
         matchTime:"1996-04-18T05:49:55.000000",
         managerScheduled: objectId2,
         teams: team_i,
-        stadium: stadium_i,
-        reservations:[reservations_i]
+        stadium: stadium_i
     });
 
     match_i.save()
         .then((result)=>{
-            res.send(result);
+            res.render("home",{title:"Home"});
         })
         .catch((err)=>{
             console.log(err);
