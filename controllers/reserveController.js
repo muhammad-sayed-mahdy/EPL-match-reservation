@@ -1,6 +1,7 @@
 const { body, validationResult } = require('express-validator');
 const lod = require('lodash');
 const Match = require('../models/Match');
+const mongoose = require('mongoose');
 
 var match;
 
@@ -18,18 +19,21 @@ const verifyReserve = () => {
         body('userId').notEmpty().withMessage('userId is required').bail(),
         body('x').notEmpty().withMessage('x is required').bail()  
         .custom(async (val) => {
-            if(match && val <= match.stadium.length){
-               
-                return true;
+            for(i=0;i<val.length;i++)
+            {
+                if (!(match && val[i] <= match.stadium.length))
+                    throw new Error("x exceeds the max length");
             }
-            throw new Error("x exceeds the max length");
+            return true;
         }),
         body('y').notEmpty().withMessage('y is required').bail()
         .custom(async (val) => {
-            if(match && val <= match.stadium.width){
-                return true;
+            for(i=0;i<val.length;i++)
+            {
+                if (!(match && val[i] <= match.stadium.width))
+                    throw new Error("y exceeds the max width");
             }
-            throw new Error("y exceeds the max width");
+            return true;
         })
     ];
 };
@@ -44,27 +48,54 @@ const reserve_post = async (req, res) => {
 
     const data = lod.pick(req.body, ['id','userId','x','y']);
 
-    for( i=0;i<match.reservations.length;i++ )
+    if(data.x.length != data.y.length)
     {
-        if(match.reservations[i].x ==data.x  && match.reservations[i].y ==data.y)
-        {
-            res.status(400).json("Seat is already reserved");
-            return;
-        }
+        res.status(400).json({"Error":"x and y arrays should be equal"});
+        return;
     }
-    match.reservations.push({userId:data.userId,x:data.x,y:data.y});
-    var objForUpdate = {};
-    objForUpdate.reservations = match.reservations;
-    objForUpdate = { $set: objForUpdate };
-    await Match.findOneAndUpdate({_id:data.id}, objForUpdate,function(err)
-    {
-        if(err)
-        {
-            res.status(401).json({"Error":"Something Went Wrong"});
-            return;
-        }
-    });
-    res.status(200).json("Reserved Sucessfully");
+    const session = await mongoose.startSession();
+    const transactionOptions = {
+        readPreference: 'primary',
+        readConcern: { level: 'local' },
+        writeConcern: { w: 'majority' }
+    };
+    
+    try {
+        await session.withTransaction( async () =>{
+
+            for(j =0;j<data.x.length;j++)
+            {
+                for( i=0;i<match.reservations.length;i++ )
+                {
+                    if(match.reservations[i].x ==data.x[j]  && match.reservations[i].y ==data.y[j])
+                    {
+                        await session.abortTransaction();
+                        throw new Error("Seat is already reserved");
+                    }
+                }
+            }
+            for(j =0;j<data.x.length;j++)
+            {
+                match.reservations.push({userId:data.userId,x:data.x[j],y:data.y[j]});
+                let objForUpdate = {};
+                objForUpdate.reservations = match.reservations;
+                objForUpdate = { $set: objForUpdate };
+                await Match.findOneAndUpdate({_id:data.id}, objForUpdate,/*{session:session}*/);
+            }
+            await session.commitTransaction();
+            res.status(200).json("Reserved Sucessfully");
+        },transactionOptions)
+
+    } catch (error) {
+        
+        res.status(400).send({"error":error.message});
+        
+    }
+
+    finally{
+        session.endSession();
+    }
+
 };
 
 const verifyCancelReserve = () => {
