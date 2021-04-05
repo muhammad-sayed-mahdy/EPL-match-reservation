@@ -9,7 +9,7 @@ const tokenExtractor = (req) => {
         if (req.cookies && req.cookies.token)
             return req.cookies.token;
         if (req.headers && req.headers.authorization)
-            return req.headers.authorization.slice(7);
+            return req.headers.authorization.split(" ")[1];
     }
     return null;
 };

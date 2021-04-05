@@ -40,7 +40,7 @@ app.use('/api/admin', require('./routes/api/apiAdminRoutes'));
 app.use('/api/reservation', require('./routes/api/apiReservationRoutes'));
 
 app.use(require('./routes/authRoutes'));
-
+app.use('/user', require('./routes/web/UserRoutes'));
 
 app.use((req, res) => {
     res.status(404).render('404');

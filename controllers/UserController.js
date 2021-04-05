@@ -64,7 +64,18 @@ const update = (req, res) => {
     });
 };
 
+const view = (req, res) => {
+    User.findById(req.params.id)
+    .then(user => {
+        res.render('users/view', { title: user.fname, user });
+    })
+    .catch( err => {
+        res.status(404).render('404');
+    });
+};
+
 module.exports = {
     verifyUpdate,
-    update
+    update,
+    view
 };

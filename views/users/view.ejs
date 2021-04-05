@@ -1,0 +1,17 @@
+<%- include("../partials/head.ejs") %>
+<%- include("../partials/nav.ejs") %>
+
+<body>
+    <div class="container-fluid well span6">
+        <div class="row-fluid">
+            <div class="span8">
+                <h3> <%= user.fname %> <%= user.lname %>  </h3>
+                <h6>Email: <%= user.email %> </h6>
+                <h6>City: <%= user.city %> </h6>
+                <h6>Gender: <%= user.gender %> </h6>
+                <h6>Birrth Date: <%= user.bdate.toDateString() %> </h6>
+            </div>
+    </div>
+</body>
+
+</html>
