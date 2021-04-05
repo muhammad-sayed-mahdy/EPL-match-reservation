@@ -4,6 +4,6 @@ const { requireAuth } = require('../../middleware/auth');
 
 const router = Router();
 
-router.put('/', requireAuth, userController.verifyUpdate(), userController.update);
+router.put('/update_profile', requireAuth, userController.verifyUpdate(), userController.update);
 
 module.exports = router;

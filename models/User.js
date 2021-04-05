@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema({
     gender: {
         type: String,
         enum: ['M', 'F'],
-        get: c => c == 'M' ? 'Male' : 'Female'
+        get: c => c == 'M' ? 'Male' : c == 'F' ? 'Female' : ''
     },
     bdate: {
         type: Date
@@ -51,7 +51,7 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.pre('updateOne', async function (next) {
-    if (this._update.password)
+    if (this._update && this._update.password)
     {
         const salt = await bcrypt.genSalt();
         this._update.password = await bcrypt.hash(this._update.password, salt);

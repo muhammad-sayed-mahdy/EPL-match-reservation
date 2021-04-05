@@ -60,7 +60,7 @@ const update = (req, res) => {
         if (err) {
             console.log(err);
         }
-        res.json({updated: data});
+        res.json({updated: data, id: req.user.id});
     });
 };
 
@@ -74,8 +74,13 @@ const view = (req, res) => {
     });
 };
 
+const edit = (req, res) => {
+    res.render('users/edit', {title: 'Update Profile', user: req.user});
+};
+
 module.exports = {
     verifyUpdate,
     update,
-    view
+    view,
+    edit
 };
