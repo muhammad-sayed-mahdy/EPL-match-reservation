@@ -14,3 +14,11 @@ A web application for Match reservation system using Node.js
 ### Run Generator
 0. You should have `python3` installed with some packages like `faker` and `json` 
 1. `cd` into `generator` folder, then run `python nosql_generator.py`
+2. `mongoimport --db db_name  --collection coll_name --file file_name.json --jsonArray`
+
+## Appendix
+1- Useful cammands:
+
+    sudo systemctl start mongod
+    sudo systemctl status mongod
+    
