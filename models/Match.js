@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
-const { teamSchema } = require('./Team');
-const { stadiumSchema } = require('./Stadium');
+// const { teamSchema } = require('./Team');
+// const { stadiumSchema } = require('./Stadium');
 
 const teamsSchema = new mongoose.Schema({
     home: {
-        type: teamSchema,
+        type: String,
         required: true
     },
     away: {
-        type: teamSchema,
+        type: String,
         required: true
     }
 });
@@ -20,20 +20,35 @@ const linemenSchema = new mongoose.Schema({
     },
     second: {
         type: String,
-        required: true
+        required: false
     }
 });
 
 const reservationSchema = new mongoose.Schema({
-    userId: {
+    user_id: {
         type: mongoose.ObjectId,
         required: true
     },
-    x: {
+    x_i: {
         type: Number,
         required: true
     },
-    y: {
+    y_i: {
+        type: Number,
+        required: true
+    }
+});
+
+const stadiaSchena = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    width: {
+        type: Number,
+        required: true
+    },
+    length: {
         type: Number,
         required: true
     }
@@ -41,14 +56,17 @@ const reservationSchema = new mongoose.Schema({
 
 const matchSchema = new mongoose.Schema({
     referee: {
-        type: String
-    },
-    linemen: {
-        type: linemenSchema
+        type: String,
+        required: true
     },
     matchTime: {
         type: Date,
         required: true
+    },
+    linemen: {
+        // it should be array of linemen!
+        type: linemenSchema,
+        unique:true
     },
     managerScheduled: {
         type: mongoose.ObjectId,
@@ -59,11 +77,12 @@ const matchSchema = new mongoose.Schema({
         required: true
     },
     stadium: {
-        type: stadiumSchema,
+        type: stadiaSchena,
         required: true
     },
     reservations: {
         type: [reservationSchema]
+        
     }
 });
 
