@@ -54,11 +54,11 @@ const reserve_post = async (req, res) => {
         return;
     }
     const session = await mongoose.startSession();
-    const transactionOptions = {
-        readPreference: 'primary',
-        readConcern: { level: 'local' },
-        writeConcern: { w: 'majority' }
-    };
+    // const transactionOptions = {
+    //     readPreference: 'primary',
+    //     readConcern: { level: 'local' },
+    //     writeConcern: { w: 'majority' }
+    // };
     
     try {
         await session.withTransaction( async () =>{
@@ -83,18 +83,18 @@ const reserve_post = async (req, res) => {
                 await Match.findOneAndUpdate({_id:data.id}, objForUpdate,/*{session:session}*/);
             }
             await session.commitTransaction();
-            res.status(200).json("Reserved Sucessfully");
-        },transactionOptions)
+            res.status(200).json({"ticket":{"x":data.x,"y":data.y}});
+        }/*,transactionOptions*/)
 
     } catch (error) {
         
         res.status(400).send({"error":error.message});
         
-    }
+    }   
 
-    finally{
-        session.endSession();
-    }
+    // finally{
+    //     session.endSession();
+    // }
 
 };
 
