@@ -10,8 +10,6 @@ router.get('/matches/show_all',matchController.show_matches);
 router.post('/matches/add_match',matchController.add_match);
 router.get('/matches/:id',matchController.show_match);
 router.delete('/matches/:id',matchController.delete_match);
-
 router.get('/matches/update/:id', matchController.redirect_update);
-
 router.post('/matches/update_match/:id', matchController.update_match);
 module.exports = router;

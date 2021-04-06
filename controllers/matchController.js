@@ -93,7 +93,7 @@ const update_match = (req, res)=>{
 
     Match.findByIdAndUpdate(req.params.id, match_i)
     .then((result)=>{
-        res.render("home", {match:result, title:"Show"});
+        res.redirect("/matches/show_all");
     })
     .catch((err)=>{
         console.log(err);

@@ -9,6 +9,6 @@ router.post('/update', requireAuth, userController.verifyUpdate(), userControlle
 //Evram:
 //Before redirecting, you need to check the type of the user first
 //I'm assuming it's a manager for now
-router.get('/profile', userController.view_manager_profile);
+router.get('/api/user/profile', userController.view_manager_profile);
 
 module.exports = router;
