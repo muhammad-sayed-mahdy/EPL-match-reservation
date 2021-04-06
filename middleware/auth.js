@@ -53,6 +53,17 @@ const requireAuth = (req, res, next) => {
         next();
     })(req, res, next);
 };
+// get user
+const userInfo = (req, res, next) => { 
+    passport.authenticate('jwt', {session: false}, (err, user, info) => {
+        if (err) {
+            res.redirect('/login');
+            return;
+        }
+        req.user = user;
+        next();
+    })(req, res, next);
+};
 
 // expecting a user to enter this route, if no user redirect to login
 // (used in get requests)
@@ -90,5 +101,6 @@ const guestRoute = (req, res, next) => {
 module.exports = {
     requireAuth,
     userRoute,
-    guestRoute
+    guestRoute,
+    userInfo
 };

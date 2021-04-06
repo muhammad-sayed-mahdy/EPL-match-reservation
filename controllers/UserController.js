@@ -65,19 +65,14 @@ const update = (req, res) => {
 };
 
 const view_profile = (req, res) =>{
-    if (req.user == undefined)
-    {
-        // u need to log in first
-        res.status(402).render('404',{title:"Error"});
-    }else
-    {
-        if (req.user.role == "admin")
-            res.render("admin_profile", {title:"Profile"});
-        else if (req.user.role == "manager")
-            res.render("manager_profile", {title:"Profile"});
-        else
-            res.render("user_profile", {title:"Profile"});
-    }
+    
+    if (req.user.role == "admin")
+        res.render("admin_profile", {title:"Profile"});
+    else if (req.user.role == "manager")
+        res.render("manager_profile", {title:"Profile"});
+    else
+        res.render("user_profile", {title:"Profile"});
+    
 };
 
 const view = (req, res) => {
