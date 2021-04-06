@@ -168,6 +168,8 @@ const cancelReserve_put = async (req, res) => {
 };
 
 
+
+
 const showReserve_get = async (req, res) => {
 
     if(req.query.id ==undefined)
@@ -179,10 +181,47 @@ const showReserve_get = async (req, res) => {
     match = await Match.findOne({_id: req.query.id});
     if (match) {
         res.status(200).json({"reservedSeats":match.reservations});
+        return;
     }
     res.status(400).json({"Error":"id does not exist"});
 
 };
+
+
+
+
+const getReservedseats = async (req, res) => {
+
+    var userId = req.user._id;
+    if(userId ==undefined)
+    {
+        res.status(400).json({"Error":"userId is required" });
+        return;
+    }
+
+    match = await Match.find({"reservations.user_id": userId}).select("reservations");
+    for(i =0;i<match.length;i++)
+    {
+        for(j=0;j<match[i].reservations.length;j++)
+        {
+            if(String(match[i].reservations[j].user_id) != String(userId))
+            {
+                match[i].reservations.splice(j, 1); 
+                j--;
+            }
+                
+        }       
+    }
+    if (match) {
+        res.status(200).json({"reservedSeats":match});
+        return;
+    }
+    res.status(400).json({"Error":"id does not exist"});
+    
+        
+
+};
+
 
 
 module.exports = {
@@ -190,5 +229,6 @@ module.exports = {
     verifyCancelReserve,
     reserve_post,
     cancelReserve_put,
-    showReserve_get
+    showReserve_get,
+    getReservedseats
 };
