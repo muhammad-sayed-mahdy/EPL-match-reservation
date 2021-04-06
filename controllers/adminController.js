@@ -27,7 +27,12 @@ const verify_id = () => {
 const getAllUsers = (req, res) => {
     try {
         User.find().then( (result) => {
-            res.status(200).json(result);
+            // res.status(200).json(result);
+            if(req.user == undefined)
+                user_name = "Evram";
+            else
+                user_name = req.user.name;
+            res.render("admin_profile", {match:result, title:"Profile", users:result, user_name:user_name});
         });
     }
     catch (error) {

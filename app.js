@@ -34,7 +34,6 @@ app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')))
 
 app.use('/api', require('./routes/api/apiAuthRoutes'));
 app.use('/api/user', require('./routes/api/APIUserRoutes'));
-// app.use(require('./routes/api/APIUserRoutes'));
 app.use('/api/stadium', require('./routes/api/apiStadiumRoutes'));
 app.use('/api/team', require('./routes/api/apiTeamRoutes'));
 app.use('/api/admin', require('./routes/api/apiAdminRoutes'));
