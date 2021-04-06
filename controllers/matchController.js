@@ -71,7 +71,7 @@ const add_match = (req, res) =>{
 const update_match = (req, res)=>{
     const linemen_i = {
         first: req.body.linemanFirst,
-        second:req.body.linemanFirst
+        second:req.body.linemanSecond
     };
     const team_i = {
         home: req.body.homeTeam,
