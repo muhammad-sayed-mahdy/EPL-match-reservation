@@ -65,9 +65,8 @@ const update = (req, res) => {
 };
 
 const view_profile = (req, res) =>{
-    
     if (req.user.role == "admin")
-        res.render("admin_profile", {title:"Profile"});
+        res.redirect("/api/admin");
     else if (req.user.role == "manager")
         res.render("manager_profile", {title:"Profile"});
     else
