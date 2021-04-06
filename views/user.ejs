@@ -25,7 +25,10 @@
         <a href="/api/admin" class="btn btn-primary">Back</a>
         <a class="delete btn btn-danger" data-doc="<%=user._id%>">Delete</a>
         <%if (!user.authorized) {%> 
-            <a href="/api/admin/authorize/<%=user._id%>" class="btn btn-info">Authorize</a>
+            <br><br>
+            <form action="/api/admin/authorize/<%=user._id%>" method="POST">
+                <button type="submit" class="btn btn-info">Authorize</button>
+            </form>
         <%}%>
     </div>
 </div>

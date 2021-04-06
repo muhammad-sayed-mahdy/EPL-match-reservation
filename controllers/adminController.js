@@ -64,10 +64,11 @@ const approveUser = (req, res) => {
         res.status(400).json({errors: errors.array()});
         return;
     }
-    const val = req.body._id;
+    const val = req.params.id;
     try {
-        User.updateOne({_id: val}, {role: "manager"}).then( (result) => {
-            res.status(200).json(result);
+        user_i = {authorized:"true"};
+        User.findByIdAndUpdate(val,user_i).then( (result) => {
+            res.redirect("/api/admin");
         });
     }
     catch (error) {
