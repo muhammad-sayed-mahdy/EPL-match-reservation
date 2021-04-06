@@ -46,9 +46,16 @@
                 <input type="text" class="form-control" id="stadium" name="linemanSecond" value="<%=match.linemen.second%>">
             </div>        
         </div>
-    
-        <button type="submit" class="btn btn-success">Update</button>
-        <a href="/matches/show_all" class="btn btn-primary">Back</a>
-
+        <div class="form-row">
+            <label for="bdate" class="form-label">Match Time</label>
+            <input type="date" class="form-control" id="date" name="date">
+            <br><br>
+            <input placeholder="Selected time" type="time" id="time" class="form-control timepicker" name="time">
+        </div>
+        <br>
+        <div class="float-right">
+            <button type="submit" class="btn btn-success">Update</button>
+            <a href="/matches/show_all" class="btn btn-primary">Back</a>
+        </div>
         
     </div>
