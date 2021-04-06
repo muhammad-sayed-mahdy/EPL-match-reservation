@@ -26,7 +26,7 @@ const verify_id = () => {
 
 const getAllUsers = (req, res) => {
     try {
-        User.find().then( (result) => {
+        User.find().sort({createdAt:-1}).then( (result) => {
             // res.status(200).json(result);
             if(req.user == undefined)
                 user_name = "Evram";
@@ -94,7 +94,33 @@ const deleteUser = (req, res) => {
     }
 };
 
+const delete_user_2 = (req,res)=>{
+    const id = req.params.id;
+    User.findByIdAndDelete(id)
+        .then(result=>{
+            res.json({redirect:"/api/admin/"});
+        })
+        .catch((err)=>console.log(err));
+};
+
+const show_user = (req, res) =>{
+    const id = req.params.id;
+    User.findById(id)
+        .then((result)=>{
+
+            if (req.user == undefined)
+                thisRole = "guest";
+            else
+                thisRole = req.user.role;
+                
+            res.render("user", {user:result, title:"Profile", role:thisRole});
+        })
+        .catch((err)=>{
+            console.log(err);
+            res.status(404).render('404',{title:"Error"});
+        });
+};
 
 module.exports = {
-    getAllUsers, verifySearch, searchUsers, verify_id, approveUser, deleteUser
+    getAllUsers, verifySearch, searchUsers, verify_id, approveUser, deleteUser, show_user, delete_user_2
 };
