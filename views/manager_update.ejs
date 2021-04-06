@@ -1,0 +1,54 @@
+<%- include("./partials/head.ejs") %>
+<%- include("./partials/nav.ejs") %>
+
+<div class="list-group d-flex flex-wrap align-content-center"  >
+    <form action="/matches/update_match/<%=match._id%>" method="POST">
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputCity">Home Team</label>
+            <input type="text" class="form-control" id="homeTeam" name="homeTeam" value="<%=match.teams.home%>">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputCity">Away Team</label>
+            <input type="text" class="form-control" id="awayTeam" name="awayTeam" value="<%=match.teams.away%>">
+          </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputCity">Referee</label>
+                <input type="text" class="form-control" id="rederee" name="referee" value="<%=match.referee%>">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputCity">Stadium</label>
+                <input type="text" class="form-control" id="stadium" name="stadium" value="<%=match.stadium.name%>">
+            </div>
+        </div>
+    
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputCity">Stadium Width</label>
+                <input type="number" class="form-control" id="stadWidth" name="stadWidth" value="<%=match.stadium.width%>">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputCity">Stadium Height</label>
+                <input type="number" class="form-control" id="stadHeight" name="stadHeight" value="<%=match.stadium.length%>">
+            </div>
+        </div>
+    
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputCity">1st Lineman</label>
+                <input type="text" class="form-control" id="stadium" name="linemanFirst" value="<%=match.linemen.first%>">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputCity">2nd Lineman</label>
+                <input type="text" class="form-control" id="stadium" name="linemanSecond" value="<%=match.linemen.second%>">
+            </div>        
+        </div>
+    
+        <button type="submit" class="btn btn-success">Update</button>
+        <a href="/matches/show_all" class="btn btn-primary">Back</a>
+
+        
+    </div>

@@ -1,0 +1,47 @@
+<%- include("./partials/head.ejs") %>
+<%- include("./partials/nav.ejs") %>
+
+<div class="card text-center ">
+    <div class="card-header">
+        <h3>User Info</h3>
+    </div>
+
+    <div class="card-body">
+        <h5 class="card-title"><%= user.fname %> <%= user.lname %> </h5>
+        <br>
+        <h5>Email: <%= user.email %> </h5>
+        <br>
+        <h5>Gender: <%= user.gender %> </h5>
+        <br>
+        <h5>City of Birth: <%= user.city %> </h5>
+        <br>
+        <h5>Date of Birth: <%= user.bdate %> </h5>
+        <br>
+        
+        <br><br>
+        
+    </div>
+    <div class="card-footer text-muted">
+        <a href="/api/admin" class="btn btn-primary">Back</a>
+        <a class="delete btn btn-danger" data-doc="<%=user._id%>">Delete</a>
+        <%if (!user.authorized) {%> 
+            <br><br>
+            <form action="/api/admin/authorize/<%=user._id%>" method="POST">
+                <button type="submit" class="btn btn-info">Authorize</button>
+            </form>
+        <%}%>
+    </div>
+</div>
+
+<script>
+    const trashcan = document.querySelector("a.delete");
+    trashcan.addEventListener('click', (e)=>{
+        const endpoint = `/api/admin/${trashcan.dataset.doc}`;
+        fetch(endpoint,{
+            method:'DELETE'
+        })
+        .then((response)=>response.json())
+        .then((data)=>window.location.href = data.redirect)
+        .catch((err)=>console.log(err));
+    });
+</script>

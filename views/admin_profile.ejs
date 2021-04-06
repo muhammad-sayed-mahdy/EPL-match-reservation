@@ -1,0 +1,37 @@
+<%- include("./partials/head.ejs") %>
+<%- include("./partials/nav.ejs") %>
+
+<h2>Welcome Mr. <%=user_name%></h2>
+
+<% if (users.length>0) { %>
+    <h2>System Users:</h2>
+    
+    <div class="list-group d-flex flex-wrap" style="width: 500px;">
+        <% users.forEach(user => { %>
+            <%if (!user.authorized){%>
+                <a href="/api/admin/<%=user._id%>" class="list-group-item list-group-item-danger" aria-current="true"  style="margin-bottom: 10px;">
+                    <div class="d-flex w-100 justify-content-center">
+                        <h4><%= user.fname%> <%= user.lname%></h4>
+                    </div>
+                    <p>Role: <%=user.role%></p>
+                    <small class="mb-1">Email: <%= user.email %></small>
+                    <br>
+                    <small class="btn-warning">Need authorization!</small>
+                </a>
+            <%} else {%>
+                <a href="/api/admin/<%=user._id%>" class="list-group-item list-group-item-primary" aria-current="true"  style="margin-bottom: 10px;">
+                    <div class="d-flex w-100 justify-content-center">
+                        <h4><%= user.fname%> <%= user.lname%></h4>
+                    </div>
+                    <p>Role: <%=user.role%></p>
+                    <small class="mb-1">Email: <%= user.email %></small>
+                    <br>
+                    <small class="btn-warning">Authorized</small>
+                </a>
+            <%}%>
+        <% }) %>
+        </div>
+<% } else { %>
+    <h3>System is Empty, hire some..</h3>
+    <% } %>
+        

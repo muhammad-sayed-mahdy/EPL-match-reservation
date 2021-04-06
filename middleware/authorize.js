@@ -10,5 +10,21 @@ const authorizeAdmin = (req, res, next) => {
     return;
 };
 
+const authorizeManager= (req, res, next) => {
 
-module.exports = { authorizeAdmin };
+    if(req.user == undefined || req.user.role !== "manager") 
+    {
+        // Not even signed in OR signed in but not a manager
+        res.status(402).render('404',{title:"Error"});
+        return;
+    }
+
+    next();
+    return;
+};
+
+
+module.exports = { 
+    authorizeAdmin,
+    authorizeManager 
+};

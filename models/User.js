@@ -40,6 +40,10 @@ const userSchema = new mongoose.Schema({
     },
     bdate: {
         type: Date
+    },
+    authorized:{
+        type: Boolean,
+        required: false
     }
 
 }, {timestamps: true});

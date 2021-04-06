@@ -1,0 +1,26 @@
+<%- include("./partials/head.ejs") %>
+<%- include("./partials/nav.ejs") %>
+
+<% if (title == "Home") { %>
+    <h2>Welcome to EPL</h2>
+    <% } %>
+
+<% if (title == "Schedule" && matches.length>0) { %>
+    <h2>Current Available Matches</h2>
+    
+    <div class="list-group d-flex flex-wrap align-content-center">
+        <% matches.forEach(match => { %>
+            <a href="/matches/<%=match._id%>" class="list-group-item list-group-item-active" aria-current="true"  style="margin-bottom: 10px;">
+                <div class="d-flex w-100 justify-content-center">
+                    <h4>H: <%= match.teams.home %>  VS  A: <%= match.teams.away %></h4>
+                </div>
+                <p class="mb-1">Stadium: <%= match.stadium.name %></p>                
+                <small class="mb-1"><%= match.matchTime %></small>
+            </a>
+        <% }) %>
+        </div>
+<% } else { %>
+    <h3>There is nothing to display...</h3>
+    <h3>Ahm 7aga el-3-pont</h3>
+    <% } %>
+        
