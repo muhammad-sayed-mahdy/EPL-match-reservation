@@ -48,15 +48,28 @@ const add_match = (req, res) =>{
 
     match_i.save()
         .then((result)=>{
-            res.render("home",{title:"Home"});
+            res.redirect("/");
         })
         .catch((err)=>{
             console.log(err);
+            res.status(404).render('404',{title:"Error"});
         });
 };
 
+const show_match = (req, res) =>{
+    const id = req.params.id;
+    Match.findById(id)
+        .then((result)=>{
+            res.render("match", {match:result, title:"Show"});
+        })
+        .catch((err)=>{
+            console.log(err);
+            res.status(404).render('404',{title:"Error"});
+        });
+}
 module.exports = {
     show_home,
     add_match,
-    show_matches
+    show_matches,
+    show_match
 };
