@@ -66,10 +66,20 @@ const show_match = (req, res) =>{
             console.log(err);
             res.status(404).render('404',{title:"Error"});
         });
-}
+};
+
+const delete_match = (req,res)=>{
+    const id = req.params.id;
+    Match.findByIdAndDelete(id)
+        .then(result=>{
+            res.json({redirect:"/matches/show_all"});
+        })
+        .catch((err)=>console.log(err));
+};
 module.exports = {
     show_home,
     add_match,
     show_matches,
-    show_match
+    show_match,
+    delete_match
 };

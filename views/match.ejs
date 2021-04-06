@@ -54,6 +54,19 @@
     <div class="card-footer text-muted">
         <!-- make sure this is a manager -->
         <a href="/" class="btn btn-warning">Update</a>
-        <a href="/" class="btn btn-danger">Delete</a>
+        <a class="delete btn btn-danger" data-doc="<%=match._id%>">Delete</a>
     </div>
 </div>
+
+<script>
+    const trashcan = document.querySelector("a.delete");
+    trashcan.addEventListener('click', (e)=>{
+        const endpoint = `/matches/${trashcan.dataset.doc}`;
+        fetch(endpoint,{
+            method:'DELETE'
+        })
+        .then((response)=>response.json())
+        .then((data)=>window.location.href = data.redirect)
+        .catch((err)=>console.log(err));
+    });
+</script>
