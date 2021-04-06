@@ -105,7 +105,13 @@ const show_match = (req, res) =>{
     const id = req.params.id;
     Match.findById(id)
         .then((result)=>{
-            res.render("match", {match:result, title:"Show"});
+
+            if (req.user == undefined)
+                thisRole = "guest";
+            else
+                thisRole = req.user.role;
+                
+            res.render("match", {match:result, title:"Show", role:thisRole});
         })
         .catch((err)=>{
             console.log(err);

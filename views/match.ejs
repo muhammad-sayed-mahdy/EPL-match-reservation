@@ -54,8 +54,10 @@
     <div class="card-footer text-muted">
         <!-- make sure this is a manager -->
         <a href="/matches/show_all" class="btn btn-primary">Back</a>
-        <a href="/matches/update/<%=match._id%>" class="btn btn-warning">Update</a>
-        <a class="delete btn btn-danger" data-doc="<%=match._id%>">Delete</a>
+        <%if (role=="manager"){%>
+            <a href="/matches/update/<%=match._id%>" class="btn btn-warning">Update</a>
+            <a class="delete btn btn-danger" data-doc="<%=match._id%>">Delete</a>
+        <%}%>
     </div>
 </div>
 
