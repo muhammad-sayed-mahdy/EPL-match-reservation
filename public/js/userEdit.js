@@ -1,6 +1,6 @@
 import {formToJSON, showErrors} from './common.js';
 
-const form = document.querySelector('form');
+const form = document.getElementById('edit-form');
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -15,7 +15,7 @@ form.addEventListener('submit', (e) => {
     .then(res => {
         if (res.ok) {
             res.json().then (data => {
-                window.location.href = `/user/${data.id}`;
+                window.location.href = `/user/profile`;
             });
         } else {
             res.json().then (data => {

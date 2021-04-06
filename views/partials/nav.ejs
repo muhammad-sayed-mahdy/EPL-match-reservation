@@ -32,12 +32,19 @@
 
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/signup">Signup</a>
-            </li>
+            <% if (loggedInUser) { %>
+                <form action="/logout" method="post" id="logout-form"></form>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
+                </li>
+            <% } else { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/signup">Signup</a>
+                </li>
+            <% } %>
         </ul>
     </div>
 

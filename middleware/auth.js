@@ -39,68 +39,50 @@ passport.deserializeUser((id, done) => {
     });
 });
 
-const requireAuth = (req, res, next) => { 
+const checkUser = (req, res, next) => { 
     passport.authenticate('jwt', {session: false}, (err, user, info) => {
         if (err) {
-            res.status(401).json({error: err});
-            return;
-        }
-        if (!user) {
-            res.status(401).json({error: "The JWT token is invalid"});
+            console.log(err);
+            res.redirect('/');
             return;
         }
         req.user = user;
+        res.locals.loggedInUser = user;
         next();
     })(req, res, next);
 };
-// get user
-const userInfo = (req, res, next) => { 
-    passport.authenticate('jwt', {session: false}, (err, user, info) => {
-        if (err) {
-            res.redirect('/login');
-            return;
-        }
-        req.user = user;
+
+const requireAuth = (req, res, next) => { 
+    if (!req.user) {
+        res.status(401).json({error: "The JWT token is invalid"});
+    } else {
         next();
-    })(req, res, next);
+    }
 };
 
 // expecting a user to enter this route, if no user redirect to login
 // (used in get requests)
 const userRoute = (req, res, next) => { 
-    passport.authenticate('jwt', {session: false}, (err, user, info) => {
-        if (err) {
-            res.redirect('/login');
-            return;
-        }
-        if (!user) {
-            res.redirect('/login');
-            return;
-        }
-        req.user = user;
-        next();
-    })(req, res, next);
+    if (!req.user) {
+        res.redirect('/login');
+        return;
+    }
+    next();
 };
 
 // expecting a guest to enter this route, if there is a user redirect to home
 // (used in get requests)
 const guestRoute = (req, res, next) => { 
-    passport.authenticate('jwt', {session: false}, (err, user, info) => {
-        if (err) {
-            res.redirect('/');
-            return;
-        }
-        if (user) {
-            res.redirect('/');
-            return;
-        }
-        next();
-    })(req, res, next);
+    if (req.user) {
+        res.redirect('/');
+        return;
+    }
+    next();
 };
 
 module.exports = {
     requireAuth,
     userRoute,
     guestRoute,
-    userInfo
+    checkUser
 };

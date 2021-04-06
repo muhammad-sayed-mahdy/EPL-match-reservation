@@ -7,6 +7,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const path = require('path');
+const { checkUser } = require('./middleware/auth');
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist
 app.use('/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));
 app.use('/js', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
 
+app.use('*', checkUser);
 
 app.use('/api', require('./routes/api/apiAuthRoutes'));
 app.use('/api/user', require('./routes/api/APIUserRoutes'));

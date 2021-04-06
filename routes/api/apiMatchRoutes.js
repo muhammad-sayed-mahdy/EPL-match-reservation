@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const matchController = require("../../controllers/matchController");
-const { requireAuth,userInfo } = require("../../middleware/auth");
+const { requireAuth } = require("../../middleware/auth");
 const { authorizeManager } = require("../../middleware/authorize");
 
 const router = Router();
@@ -10,7 +10,7 @@ router.get('/',matchController.show_home);
 
 router.get('/matches/show_all',matchController.show_matches);
 
-router.get('/matches/:id', userInfo, matchController.show_match);
+router.get('/matches/:id', matchController.show_match);
 
 router.post('/matches/add_match', requireAuth, authorizeManager, matchController.add_match);
 
