@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/muhammad-sayed-mahdy/EPL-match-reservation#readme",
   "dependencies": {
+    "@mapbox/node-pre-gyp": "^1.0.2",
     "bcrypt": "^5.0.0",
     "bootstrap": "^4.6.0",
     "bootstrap-icons": "^1.4.1",

@@ -39,7 +39,7 @@ const reservationSchema = new mongoose.Schema({
     }
 });
 
-const stadiaSchena = new mongoose.Schema({
+const stadiaSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -64,7 +64,6 @@ const matchSchema = new mongoose.Schema({
         required: true
     },
     linemen: {
-        // it should be array of linemen!
         type: linemenSchema,
         unique:true
     },
@@ -77,7 +76,7 @@ const matchSchema = new mongoose.Schema({
         required: true
     },
     stadium: {
-        type: stadiaSchena,
+        type: stadiaSchema,
         required: true
     },
     reservations: {
