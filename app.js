@@ -2,6 +2,7 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
+const cookieParser = require('cookie-parser');
 const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
@@ -21,6 +22,7 @@ mongoose.connect(process.env.dbURI, {useNewUrlParser: true, useUnifiedTopology: 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.json());
+app.use(cookieParser());
 app.use(passport.initialize());
 app.use(express.urlencoded({extended:true}));
 
@@ -35,11 +37,12 @@ app.use('/api', require('./routes/api/apiAuthRoutes'));
 app.use(require('./routes/api/APIUserRoutes'));
 app.use('/api/stadium', require('./routes/api/apiStadiumRoutes'));
 app.use('/api/team', require('./routes/api/apiTeamRoutes'));
+app.use('/api/admin', require('./routes/api/apiAdminRoutes'));
 app.use('/api/reservation', require('./routes/api/apiReservationRoutes'));
 
 app.use(require('./routes/api/apiMatchRoutes'));
 app.use(require('./routes/authRoutes'));
-
+app.use('/user', require('./routes/web/UserRoutes'));
 
 app.use((req, res) => {
     res.status(404).render('404',{title:"Error"});

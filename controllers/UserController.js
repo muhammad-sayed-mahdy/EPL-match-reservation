@@ -60,7 +60,7 @@ const update = (req, res) => {
         if (err) {
             console.log(err);
         }
-        res.json({updated: data});
+        res.json({updated: data, id: req.user.id});
     });
 };
 
@@ -68,8 +68,24 @@ const view_manager_profile = (req, res) =>{
     res.render("manager_profile", {title:"Profile"});
 };
 
+const view = (req, res) => {
+    User.findById(req.params.id)
+    .then(user => {
+        res.render('users/view', { title: user.fname, user });
+    })
+    .catch( err => {
+        res.status(404).render('404');
+    });
+};
+
+const edit = (req, res) => {
+    res.render('users/edit', {title: 'Update Profile', user: req.user});
+};
+
 module.exports = {
     verifyUpdate,
     update,
-    view_manager_profile
+    view_manager_profile,
+    view,
+    edit
 };

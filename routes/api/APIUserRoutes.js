@@ -4,7 +4,7 @@ const { requireAuth } = require('../../middleware/auth');
 
 const router = Router();
 
-router.post('/update', requireAuth, userController.verifyUpdate(), userController.update);
+router.put('/update_profile', requireAuth, userController.verifyUpdate(), userController.update);
 
 //Evram:
 //Before redirecting, you need to check the type of the user first
