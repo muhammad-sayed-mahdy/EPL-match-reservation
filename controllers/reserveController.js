@@ -16,7 +16,6 @@ const verifyReserve = () => {
             }
             throw new Error("Match id does not exist");
         }),
-        body('userId').notEmpty().withMessage('userId is required').bail(),
         body('x').notEmpty().withMessage('x is required').bail()  
         .custom(async (val) => {
             for(i=0;i<val.length;i++)
@@ -46,7 +45,8 @@ const reserve_post = async (req, res) => {
         return;
     }
 
-    const data = lod.pick(req.body, ['id','userId','x','y']);
+    const data = lod.pick(req.body, ['id','x','y']);
+    data.userId = req.user._id;
 
     if(data.x.length != data.y.length)
     {
@@ -84,7 +84,7 @@ const reserve_post = async (req, res) => {
             }
             await session.commitTransaction();
             res.status(200).json("Reserved Sucessfully");
-        },transactionOptions)
+        },transactionOptions);
 
     } catch (error) {
         
@@ -108,7 +108,6 @@ const verifyCancelReserve = () => {
             }
             throw new Error("id does not exist");
         }),
-        body('userId').notEmpty().withMessage('userId is required').bail(),
         body('x').notEmpty().withMessage('x is required').bail()  
         .custom(async (val) => {
             if(match && val <= match.stadium.length){
@@ -133,7 +132,8 @@ const cancelReserve_put = async (req, res) => {
         res.status(400).json({errors: errors.array()});
         return;
     }
-    const data = lod.pick(req.body, ['id','userId','x','y']);
+    const data = lod.pick(req.body, ['id','x','y']);
+    data.userId = req.user._id;
     var found =  false;
     ind = -1;
     for( i=0 ; i<match.reservations.length ; i++ )
