@@ -81,7 +81,7 @@ const view = (req, res) => {
         res.render('users/view', { title: user.fname, user });
     })
     .catch( err => {
-        res.status(404).render('404');
+        res.status(404).render('404', {title: "Not found"});
     });
 };
 
