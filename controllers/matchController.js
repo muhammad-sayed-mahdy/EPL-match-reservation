@@ -8,6 +8,18 @@ const show_home = (req, res) => {
     res.render("home", {title:"Home"});
 };
 
+const redirect_update = (req, res)=>{
+    const id = req.params.id;
+    Match.findById(id)
+        .then((result)=>{
+            res.render("manager_update", {match:result, title:"Update"});
+        })
+        .catch((err)=>{
+            console.log(err);
+            res.status(404).render('404',{title:"Error"});
+        });
+};  
+
 //retrieve all matches
 const show_matches = (req, res) =>{
     Match.find().sort({createdAt:-1})
@@ -56,6 +68,39 @@ const add_match = (req, res) =>{
         });
 };
 
+const update_match = (req, res)=>{
+    const linemen_i = {
+        first: req.body.linemanFirst,
+        second:req.body.linemanFirst
+    };
+    const team_i = {
+        home: req.body.homeTeam,
+        away: req.body.awayTeam
+    };
+    
+    const stadium_i = {
+        name: req.body.stadium,
+        width:req.body.stadWidth,
+        length:req.body.stadHeight
+    };
+    const match_i = {
+        referee:req.body.referee,
+        linemen:linemen_i,
+        matchTime:"1996-04-18T05:49:55.000000",
+        teams: team_i,
+        stadium: stadium_i
+    };
+
+    Match.findByIdAndUpdate(req.params.id, match_i)
+    .then((result)=>{
+        res.render("home", {match:result, title:"Show"});
+    })
+    .catch((err)=>{
+        console.log(err);
+        res.status(404).render('404',{title:"Error"});
+    });
+};
+
 const show_match = (req, res) =>{
     const id = req.params.id;
     Match.findById(id)
@@ -76,10 +121,14 @@ const delete_match = (req,res)=>{
         })
         .catch((err)=>console.log(err));
 };
+
+
 module.exports = {
     show_home,
     add_match,
     show_matches,
     show_match,
-    delete_match
+    delete_match,
+    update_match,
+    redirect_update
 };
