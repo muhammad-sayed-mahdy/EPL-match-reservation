@@ -26,9 +26,7 @@
         <a class="delete btn btn-danger" data-doc="<%=user._id%>">Delete</a>
         <%if (!user.authorized) {%> 
             <br><br>
-            <form action="/api/admin/authorize/<%=user._id%>" method="POST">
-                <button type="submit" class="btn btn-info">Authorize</button>
-            </form>
+            <a class="update_2 btn btn-info" data-doc="<%=user._id%>">Authorize</a>
         <%}%>
     </div>
 </div>
@@ -39,6 +37,19 @@
         const endpoint = `/api/admin/${trashcan.dataset.doc}`;
         fetch(endpoint,{
             method:'DELETE'
+        })
+        .then((response)=>response.json())
+        .then((data)=>window.location.href = data.redirect)
+        .catch((err)=>console.log(err));
+    });
+</script>
+
+<script>
+    const trashcan_2 = document.querySelector("a.update_2");
+    trashcan_2.addEventListener('click', (e)=>{
+        const endpoint_2 = `/api/admin/authorize/${trashcan_2.dataset.doc}`;
+        fetch(endpoint_2,{
+            method:'PATCH'
         })
         .then((response)=>response.json())
         .then((data)=>window.location.href = data.redirect)

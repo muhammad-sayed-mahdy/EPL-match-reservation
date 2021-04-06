@@ -48,11 +48,12 @@ const add_match = (req, res) =>{
         length:req.body.stadHeight
     };
     var objectId2 = new ObjectID();
-
+    var dateObj = new Date(req.body.date+ 'T' + req.body.time);
+    
     const match_i = new Match({
         referee:req.body.referee,
         linemen:linemen_i,
-        matchTime:"1996-04-18T05:49:55.000000",
+        matchTime:dateObj,
         managerScheduled: objectId2,
         teams: team_i,
         stadium: stadium_i
@@ -83,10 +84,12 @@ const update_match = (req, res)=>{
         width:req.body.stadWidth,
         length:req.body.stadHeight
     };
+    var dateObj = new Date(req.body.date+ 'T' + req.body.time);
+    
     const match_i = {
         referee:req.body.referee,
         linemen:linemen_i,
-        matchTime:"1996-04-18T05:49:55.000000",
+        matchTime:dateObj,
         teams: team_i,
         stadium: stadium_i
     };
