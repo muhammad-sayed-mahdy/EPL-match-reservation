@@ -5,21 +5,23 @@
   <div class="container">
 
     <form class="row g-3" id="<%=match._id%>" name="reservation_form">
-      <div>
-        <% for(var i = 0; i < match.stadium.length; ++i){ %>
-          <div class="row">
-            <% for(var j = 0; j < match.stadium.width; ++j){ %>
-              <% if(seats[i][j]){ %>
-                <label style="background-color: red;" class="col" id="<%=i%> <%=j%>" > ( <%= i%> , <%= j%> ) </label>
-              <% } else { %>
-                <label style="background-color: green;" class="col" id="<%=i%> <%=j%>" > ( <%= i%> , <%= j%> ) </label>
+      <table class="table table-bordered">
+        <tbody>
+          <% for(var i = 0; i < match.stadium.length; ++i){ %>
+            <tr>
+              <% for(var j = 0; j < match.stadium.width; ++j){ %>
+                <% if(seats[i][j]){ %>
+                  <td style="background-color: red; text-align: center;" id="<%=i%> <%=j%>" > ( <%= i%> , <%= j%> ) </td>
+                <% } else { %>
+                  <td style="background-color: green; text-align: center;" id="<%=i%> <%=j%>" > ( <%= i%> , <%= j%> ) </td>
+                <% } %>
               <% } %>
-            <% } %>
-          </div>
-        <% } %>
-      </div>
-      <button type="submit"> Reserve </button>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
     </form>
+    <button type="submit" form="<%= match._id %> "> Reserve </button>
 
   </div>
   <script type="module" src="/js/reservation.js"></script>
