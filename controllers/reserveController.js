@@ -47,7 +47,7 @@ const reserve_post = async (req, res) => {
 
     const data = lod.pick(req.body, ['id','x_i','y_i']);
     data.userId = req.user._id;
-
+    console.log(data);
     if(data.x_i.length != data.y_i.length)
     {
         res.status(400).json({"Error":"x and y arrays should be equal"});
@@ -223,6 +223,28 @@ const getReservedseats = async (req, res) => {
 };
 
 
+const getReservations = async (req, res) => {
+
+    match = await Match.findOne({_id: req.params.match_id});
+    if (match) {
+        var seats = new Array(match.stadium.length);
+        for(var i = 0; i < match.stadium.length; ++i){
+            seats[i] = new Array(match.stadium.width);
+            for(var j = 0; j < match.stadium.width; ++j){
+                seats[i][j] = 0;
+            }
+        }
+        for(var x of match.reservations){
+            seats[x.y_i][x.x_i] = 1;
+        }
+        res.render('reservations', {match: match, seats: seats, title: "Reservations"});
+        return;
+    }
+    res.status(400).json({"Error":"id does not exist"});
+
+};
+
+
 
 module.exports = {
     verifyReserve,
@@ -230,5 +252,6 @@ module.exports = {
     reserve_post,
     cancelReserve_put,
     showReserve_get,
-    getReservedseats
+    getReservedseats,
+    getReservations
 };
