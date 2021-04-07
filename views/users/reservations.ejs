@@ -1,15 +1,18 @@
 <%- include("../partials/head.ejs") %>
 <%- include("../partials/nav.ejs") %>
 
-<% if (reservations.length>0) { %>
+<% if (matches.length>0) { %>
     <h2>Current Available Reservations</h2>
     
     <div class="list-group d-flex flex-wrap align-content-center">
-        <% reservations.forEach(reservation => { %>
-            <div class="d-flex w-100 justify-content-center">
-                <h4>Seat: <%= reservation.x_i %> | <%= reservation.y_i %></h4>
-            </div>
-            <a class="update btn btn-danger" data-doc="<%=reservation._id%>">Cancel</a>
+
+        <% matches.forEach(match => { %>
+            <% match.reservations.forEach(reservation => { %>
+                <div class="d-flex w-100 justify-content-center" id = "<%=reservation.x_i%> <%= reservation.y_i %> <%= match._id %>">
+                    <h4>Seat: <%= reservation.x_i %> | <%= reservation.y_i %></h4>
+                </div>
+                <a class="update btn btn-danger" data-doc="<%=reservation._id%>">Cancel</a>
+            <% }) %>
         <% }) %>
         </div>
 <% } else { %>
@@ -20,11 +23,18 @@
     const trashcan_2 = document.querySelector("a.update");
     trashcan_2.addEventListener('click', (e)=>{
         const endpoint_2 = `/api/reservation/cancel`;
+        var res = e.id.split(" ");
+        const reqbody = {
+            'x_i': parseInt(res[0]),
+            'y_i': parseInt(res[1]),
+            'id': parseInt(res[2])
+        };
         fetch(endpoint_2,{
-            method:'PUT'
+            method:'PUT',
+            body: JSON.stringify(reqbody)
         })
         .then((response)=>response.json())
-        .then((data)=>window.location.href = data.redirect)
+        .then((data)=>window.location.href = '/')
         .catch((err)=>console.log(err));
     });
 </script>
