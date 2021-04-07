@@ -12,7 +12,7 @@ const authorizeAdmin = (req, res, next) => {
 
 const renderUnauthorized = (req, res, next) => {
     if(req.user.role !== "admin"){
-        res.render("unauthorized", {title:"Error"});
+        res.status(402).render("unauthorized", {title:"Error"});
         return;
     }
     next();
