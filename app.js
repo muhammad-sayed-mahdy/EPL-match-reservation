@@ -36,13 +36,11 @@ app.use('*', checkUser);
 
 app.use('/api', require('./routes/api/apiAuthRoutes'));
 app.use('/api/user', require('./routes/api/APIUserRoutes'));
-app.use('/api/stadium', require('./routes/api/apiStadiumRoutes'));
-app.use('/api/team', require('./routes/api/apiTeamRoutes'));
-app.use('/api/admin', require('./routes/api/apiAdminRoutes'));
 app.use('/api/reservation', require('./routes/api/apiReservationRoutes'));
 
 app.use(require('./routes/api/apiMatchRoutes'));
-app.use(require('./routes/authRoutes'));
+app.use('/admin', require('./routes/web/AdminRoutes'));
+app.use(require('./routes/web/authRoutes'));
 app.use('/user', require('./routes/web/UserRoutes'));
 
 app.use((req, res) => {

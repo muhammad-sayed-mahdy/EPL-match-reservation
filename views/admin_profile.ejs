@@ -1,7 +1,7 @@
 <%- include("./partials/head.ejs") %>
 <%- include("./partials/nav.ejs") %>
 
-<form class="row g-3" action="/api/admin/" method="POST">
+<form class="row g-3" action="/admin/" method="POST">
     <div class="col-auto">
         <input type="text" class="form-control" id="inputPassword2" name="search_query" placeholder="Search by fname only...">
     </div>
@@ -17,7 +17,7 @@
     <div class="list-group d-flex flex-wrap" style="width: 500px;">
         <% users.forEach(user => { %>
             <%if (!user.authorized){%>
-                <a href="/api/admin/<%=user._id%>" class="list-group-item list-group-item-danger" aria-current="true"  style="margin-bottom: 10px;">
+                <a href="/admin/<%=user._id%>" class="list-group-item list-group-item-danger" aria-current="true"  style="margin-bottom: 10px;">
                     <div class="d-flex w-100 justify-content-center">
                         <h4><%= user.fname%> <%= user.lname%></h4>
                     </div>
@@ -27,7 +27,7 @@
                     <small class="btn-warning">Need authorization!</small>
                 </a>
             <%} else {%>
-                <a href="/api/admin/<%=user._id%>" class="list-group-item list-group-item-primary" aria-current="true"  style="margin-bottom: 10px;">
+                <a href="/admin/<%=user._id%>" class="list-group-item list-group-item-primary" aria-current="true"  style="margin-bottom: 10px;">
                     <div class="d-flex w-100 justify-content-center">
                         <h4><%= user.fname%> <%= user.lname%></h4>
                     </div>

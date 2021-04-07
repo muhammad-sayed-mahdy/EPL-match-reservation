@@ -46,7 +46,8 @@ const searchUsers = (req, res) => {
     
     const user_name = req.body.search_query;
     try {
-        User.find({fname: user_name}).then( (result) => {
+        //Nice keemo
+        User.find({fname: {$regex: user_name}}).then( (result) => {
             // res.status(200).json(result);
             res.render("admin_profile", {title:"Profile", users:result, user_name:req.user.fname});
         });
@@ -68,12 +69,21 @@ const approveUser = (req, res) => {
     user_i = {authorized:"true"};
     User.findByIdAndUpdate(val,user_i)
     .then(result=>{
-        res.json({redirect:"/api/admin/"});
+        res.json({redirect:"/admin"});
     })
     .catch((err)=>console.log(err));
 };
 
-
+const promoteUser = (req, res)=>{
+    const val = req.params.id;
+    
+    user_i = {role:"manager"};
+    User.findByIdAndUpdate(val,user_i)
+    .then(result=>{
+        res.json({redirect:"/admin"});
+    })
+    .catch((err)=>console.log(err));
+}
 
 const deleteUser = (req, res) => {
     const errors = validationResult(req);
@@ -96,7 +106,7 @@ const delete_user_2 = (req,res)=>{
     const id = req.params.id;
     User.findByIdAndDelete(id)
         .then(result=>{
-            res.json({redirect:"/api/admin/"});
+            res.json({redirect:"/admin"});
         })
         .catch((err)=>console.log(err));
 };
@@ -120,5 +130,5 @@ const show_user = (req, res) =>{
 };
 
 module.exports = {
-    getAllUsers, verifySearch, searchUsers, verify_id, approveUser, deleteUser, show_user, delete_user_2
+    getAllUsers, verifySearch, searchUsers, verify_id, approveUser, deleteUser, show_user, delete_user_2,promoteUser
 };

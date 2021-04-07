@@ -7,7 +7,9 @@ const ObjectID = require('mongodb').ObjectID;
 const show_home = (req, res) => {
     res.render("home", {title:"Home"});
 };
-
+const add_event = (req, res) =>{
+    res.render("manager_profile",{title:"Profile"});
+};
 const redirect_update = (req, res)=>{
     const id = req.params.id;
     Match.findById(id)
@@ -139,5 +141,6 @@ module.exports = {
     show_match,
     delete_match,
     update_match,
-    redirect_update
+    redirect_update,
+    add_event
 };

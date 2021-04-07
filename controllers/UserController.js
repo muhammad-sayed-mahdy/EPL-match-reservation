@@ -65,10 +65,12 @@ const update = (req, res) => {
 };
 
 const view_profile = (req, res) =>{
+    //sure not a guest
     if (req.user.role == "admin")
-        res.redirect("/api/admin");
+        res.redirect("/admin");
+
     else if (req.user.role == "manager")
-        res.render("manager_profile", {title:"Profile"});
+        res.render("user_profile", {title:"Profile"});
     else
         res.render("user_profile", {title:"Profile"});
     
