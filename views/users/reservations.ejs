@@ -9,9 +9,22 @@
             <div class="d-flex w-100 justify-content-center">
                 <h4>Seat: <%= reservation.x_i %> | <%= reservation.y_i %></h4>
             </div>
+            <a class="update btn btn-danger" data-doc="<%=reservation._id%>">Cancel</a>
         <% }) %>
         </div>
 <% } else { %>
     <h3 >There is nothing to display...</h3>
 <% } %>
         
+<script>
+    const trashcan_2 = document.querySelector("a.update");
+    trashcan_2.addEventListener('click', (e)=>{
+        const endpoint_2 = `/api/reservation/cancel`;
+        fetch(endpoint_2,{
+            method:'PUT'
+        })
+        .then((response)=>response.json())
+        .then((data)=>window.location.href = data.redirect)
+        .catch((err)=>console.log(err));
+    });
+</script>

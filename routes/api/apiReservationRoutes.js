@@ -3,7 +3,7 @@ const reserveController = require("../../controllers/reserveController");
 const { requireAuth } = require("../../middleware/auth");
 
 const router = Router();
-
+// /api/reservation/
 router.post('/', requireAuth, reserveController.verifyReserve(), reserveController.reserve_post);
 router.put('/cancel', requireAuth, reserveController.verifyCancelReserve(), reserveController.cancelReserve_put);
 router.get('/show', requireAuth, reserveController.showReserve_get);        // get reserved seat of a certain match
