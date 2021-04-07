@@ -1,4 +1,25 @@
 <%- include("./partials/head.ejs") %>
 <%- include("./partials/nav.ejs") %>
 
-<p>This is a user profile</p>
+<body>
+    <div class="container-fluid well span6">
+        <div class="row-fluid">
+            <div class="span8">
+                <h3> <%= loggedInUser.fname %> <%= loggedInUser.lname %>  </h3>
+                <h6>Email: <%= loggedInUser.email %> </h6>
+                <h6>City: <%= loggedInUser.city %> </h6>
+                <h6>Gender: <%= loggedInUser.gender %> </h6>
+                <h6>Birrth Date: <%= loggedInUser.bdate ? loggedInUser.bdate.toDateString() : "" %> </h6>
+            </div>
+            <a class="btn btn-primary" href="/user/update_profile" role="button">Edit</a>
+            <%if (loggedInUser.role =="manager") {%>
+                <a class="btn btn-info" href="/matches/create" role="button">Create Event</a>
+            <%}%>
+            <%if (loggedInUser.role =="fan") {%>
+                <a class="btn btn-primary" href="/user/reservations" role="button">Reservations</a>
+            <%}%>
+        </div>
+    </div>
+</body>
+
+</html>

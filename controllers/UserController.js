@@ -1,6 +1,7 @@
 const { body, validationResult } = require('express-validator');
 const lo = require('lodash');
 const User = require('../models/User');
+const Match = require('../models/Match');
 
 const verifyUpdate = () => {
     return [
@@ -65,11 +66,12 @@ const update = (req, res) => {
 };
 
 const view_profile = (req, res) =>{
-    
+    //sure not a guest
     if (req.user.role == "admin")
-        res.render("admin_profile", {title:"Profile"});
+        res.redirect("/admin");
+
     else if (req.user.role == "manager")
-        res.render("manager_profile", {title:"Profile"});
+        res.render("user_profile", {title:"Profile"});
     else
         res.render("user_profile", {title:"Profile"});
     
@@ -89,10 +91,40 @@ const edit = (req, res) => {
     res.render('users/edit', {title: 'Update Profile', user: req.user});
 };
 
+const reservations = async(req, res)=>{
+    var userId = req.user._id;
+    if(userId ==undefined)
+    {
+        res.status(400).json({"Error":"userId is required" });
+        return;
+    }
+
+    match = await Match.find({"reservations.user_id": userId}).select("reservations");
+    for(i =0;i<match.length;i++)
+    {
+        for(j=0;j<match[i].reservations.length;j++)
+        {
+            if(String(match[i].reservations[j].user_id) != String(userId))
+            {
+                match[i].reservations.splice(j, 1); 
+                j--;
+            }
+                
+        }       
+    }
+    if (match) {
+        // res.status(200).json({"reservedSeats":match});
+        res.render("users/reservations", {title:"Show", reservations:match});
+        return;
+    }
+    res.status(400).json({"Error":"id does not exist"});
+};
+
 module.exports = {
     verifyUpdate,
     update,
     view_profile,
     view,
-    edit
+    edit,
+    reservations
 };

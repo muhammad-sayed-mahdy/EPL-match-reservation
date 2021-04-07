@@ -48,7 +48,7 @@
     </div>
 
     <div class="card-footer text-muted">
-        <p class="card-text">Date: <%=match.matchTime%></p>
+        <p class="card-text">Date: <%= match.matchTime.toDateString() + match.matchTime.toLocaleString() %></p>
     </div>
 
     <div class="card-footer text-muted">

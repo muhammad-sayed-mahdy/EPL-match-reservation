@@ -1,6 +1,6 @@
 import {formToJSON, showErrors} from './common.js';
 
-const form = document.querySelector('form');
+const form = document.getElementById('login-form');
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();

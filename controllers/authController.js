@@ -108,11 +108,17 @@ const login_post = async (req, res) => {
             res.cookie('token', token, { secure: true, httpOnly: true, maxAge: MAX_AGE_IN_SEC * 1000, sameSite: 'lax' });
             res.json({id: user.id, token});
         } else {
-            res.status(400).json({error: "Incorrect Password"});
+            const passwordError = {
+                "value": req.body.password,
+                "msg": "Incorrect Password",
+                "param": "password",
+                "location": "body" 
+            };
+            res.status(400).json({errors: [passwordError]});
         }
 
     } catch (error) {
-        res.status(400).json({error: error.message});
+        res.status(400).json({errors: [error.message]});
     }
 };
 

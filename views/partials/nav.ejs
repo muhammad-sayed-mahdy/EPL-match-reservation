@@ -9,35 +9,29 @@
             <!-- Must be tailored later. -->
             <a class="nav-link" href="/user/profile">Profile</a>
         </li>
-    
-        <li class="nav-item active">
-            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-        </li>
 
         <li class="nav-item active">
             <a class="nav-link" href="/matches/show_all">Matches</a>
         </li>
-
-        <li class="nav-item active">
-            <a class="nav-link" href="/api/stadiums">Stadiums</a>
-        </li>
-
-        <li class="nav-item active">
-            <a class="nav-link" href="/api/teams">Teams</a>
-        </li>
-
 
         </ul>
     </div>
 
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/signup">Signup</a>
-            </li>
+            <% if (loggedInUser) { %>
+                <form action="/logout" method="post" id="logout-form"></form>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout</a>
+                </li>
+            <% } else { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/signup">Signup</a>
+                </li>
+            <% } %>
         </ul>
     </div>
 

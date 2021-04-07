@@ -10,6 +10,15 @@ const authorizeAdmin = (req, res, next) => {
     return;
 };
 
+const renderUnauthorized = (req, res, next) => {
+    if(req.user.role !== "admin"){
+        res.status(402).render("unauthorized", {title:"Error"});
+        return;
+    }
+    next();
+    return;
+};
+
 const authorizeManager= (req, res, next) => {
 
     if(req.user == undefined || req.user.role !== "manager") 
@@ -26,5 +35,6 @@ const authorizeManager= (req, res, next) => {
 
 module.exports = { 
     authorizeAdmin,
-    authorizeManager 
+    authorizeManager,
+    renderUnauthorized
 };

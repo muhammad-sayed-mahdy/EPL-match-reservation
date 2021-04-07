@@ -28,7 +28,7 @@ const getAllUsers = (req, res) => {
     try {
         User.find().sort({createdAt:-1}).then( (result) => {
             // res.status(200).json(result);
-            res.render("admin_profile", {match:result, title:"Profile", users:result, user_name:req.user.name});
+            res.render("admin_profile", {title:"Profile", users:result, user_name:req.user.fname});
         });
     }
     catch (error) {
@@ -37,15 +37,19 @@ const getAllUsers = (req, res) => {
 };
 
 const searchUsers = (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        res.status(400).json({errors: errors.array()});
-        return;
-    }
-    const val = req.body.email;
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //     res.status(400).json({errors: errors.array()});
+    //     return;
+    // }
+    // const val = req.body.email;
+    
+    const user_name = req.body.search_query;
     try {
-        User.find({email: {$regex: val}}).then( (result) => {
-            res.status(200).json(result);
+        //Nice keemo
+        User.find({fname: {$regex: user_name}}).then( (result) => {
+            // res.status(200).json(result);
+            res.render("admin_profile", {title:"Profile", users:result, user_name:req.user.fname});
         });
     }
     catch (error) {
@@ -55,24 +59,31 @@ const searchUsers = (req, res) => {
 
 
 const approveUser = (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        res.status(400).json({errors: errors.array()});
-        return;
-    }
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //     res.status(400).json({errors: errors.array()});
+    //     return;
+    // }
     const val = req.params.id;
-    try {
-        user_i = {authorized:"true"};
-        User.findByIdAndUpdate(val,user_i).then( (result) => {
-            res.redirect("/api/admin");
-        });
-    }
-    catch (error) {
-        res.status(400).json({error: error.message});
-    }
+    
+    user_i = {authorized:"true"};
+    User.findByIdAndUpdate(val,user_i)
+    .then(result=>{
+        res.json({redirect:"/admin"});
+    })
+    .catch((err)=>console.log(err));
 };
 
-
+const promoteUser = (req, res)=>{
+    const val = req.params.id;
+    
+    user_i = {role:"manager"};
+    User.findByIdAndUpdate(val,user_i)
+    .then(result=>{
+        res.json({redirect:"/admin"});
+    })
+    .catch((err)=>console.log(err));
+};
 
 const deleteUser = (req, res) => {
     const errors = validationResult(req);
@@ -91,11 +102,11 @@ const deleteUser = (req, res) => {
     }
 };
 
-const delete_user_2 = (req,res)=>{
+const delete_user_2 = (req,res)=>{        
     const id = req.params.id;
     User.findByIdAndDelete(id)
         .then(result=>{
-            res.json({redirect:"/api/admin/"});
+            res.json({redirect:"/admin"});
         })
         .catch((err)=>console.log(err));
 };
@@ -119,5 +130,5 @@ const show_user = (req, res) =>{
 };
 
 module.exports = {
-    getAllUsers, verifySearch, searchUsers, verify_id, approveUser, deleteUser, show_user, delete_user_2
+    getAllUsers, verifySearch, searchUsers, verify_id, approveUser, deleteUser, show_user, delete_user_2,promoteUser
 };
