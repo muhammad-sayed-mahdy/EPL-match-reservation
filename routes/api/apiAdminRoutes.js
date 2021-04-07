@@ -4,12 +4,10 @@ const { requireAuth } = require("../../middleware/auth");
 const { authorizeAdmin } = require("../../middleware/authorize");
 const router = Router();
 
-// for dev:
+//api/admin/
+router.get('/', requireAuth, authorizeAdmin, adminController.getAllUsers);
 router.get('/:id',  requireAuth, authorizeAdmin, adminController.show_user);
 
-router.get('/', requireAuth, authorizeAdmin, adminController.getAllUsers);
-
-//sorry kareem, but delete_user_2 works!
 router.delete('/:id', requireAuth, authorizeAdmin, adminController.verify_id(), adminController.delete_user_2);
 
 router.patch('/authorize/:id', requireAuth, authorizeAdmin, adminController.verify_id(), adminController.approveUser);
