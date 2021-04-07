@@ -235,7 +235,8 @@ const getReservations = async (req, res) => {
             }
         }
         for(var x of match.reservations){
-            seats[x.y_i][x.x_i] = 1;
+            //if(x.y_i != undefined && x.x_i != undefined)
+            seats[x.x_i][x.y_i] = 1;
         }
         res.render('reservations', {match: match, seats: seats, title: "Reservations"});
         return;

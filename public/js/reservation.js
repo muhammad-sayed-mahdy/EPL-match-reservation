@@ -1,19 +1,20 @@
-import {formToJSON, showErrors} from './common.js';
+import {showErrors} from './common.js';
 
-const form = document.querySelector('form');
+const form = document.querySelector('[name = reservation_form]');
 const labels = document.querySelectorAll('label');
 
 form.addEventListener('click', (e) => {
     var x = e.target;
     if(x.style.backgroundColor === "green"){
-    x.style.backgroundColor = "gray";
+        x.style.backgroundColor = "gray";
     }
     else if(x.style.backgroundColor === "gray"){
-    x.style.backgroundColor = "green";
+        x.style.backgroundColor = "green";
     }
 });
 
 form.addEventListener('submit', (e) => {
+    e.preventDefault();
     var xs = [];
     var ys = [];
     for (var i = 0; i < labels.length; i++) {
@@ -25,9 +26,10 @@ form.addEventListener('submit', (e) => {
     }
     const reqbody = {
         'id': form.id,
-        'x_i': xs,
-        'y_i': ys
+        'x_i': ys,
+        'y_i': xs
     };
+    console.log(reqbody);
     fetch('/api/reservation/', {
         method: "POST",
         headers: {
@@ -41,7 +43,7 @@ form.addEventListener('submit', (e) => {
             window.location.href = '/matches/' + form.id;
         } else {
             res.json().then (data => {
-                showErrors(data.errors);
+                console.log(data);
             });
         }
     })
