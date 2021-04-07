@@ -114,7 +114,7 @@ const reservations = async(req, res)=>{
     }
     if (match) {
         // res.status(200).json({"reservedSeats":match});
-        res.render("reservations", {title:"Show", reservations:match});
+        res.render("users/reservations", {title:"Show", reservations:match});
         return;
     }
     res.status(400).json({"Error":"id does not exist"});

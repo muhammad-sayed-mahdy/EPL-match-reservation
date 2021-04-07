@@ -1,17 +1,16 @@
 const { Router } = require("express");
 const adminController = require("../../controllers/adminController");
-const { requireAuth } = require("../../middleware/auth");
-const { authorizeAdmin } = require("../../middleware/authorize");
+const { requireAuth,userRoute } = require("../../middleware/auth");
+const { authorizeAdmin,renderUnauthorized } = require("../../middleware/authorize");
 const router = Router();
 
-router.get('/', requireAuth, authorizeAdmin, adminController.getAllUsers);
-router.get('/:id',  requireAuth, authorizeAdmin, adminController.show_user);
+router.get('/', userRoute, renderUnauthorized, adminController.getAllUsers);
+router.get('/:id',  userRoute, renderUnauthorized, adminController.show_user);
 
 router.delete('/:id', requireAuth, authorizeAdmin, adminController.verify_id(), adminController.delete_user_2);
-
 router.patch('/authorize/:id', requireAuth, authorizeAdmin, adminController.verify_id(), adminController.approveUser);
 router.patch('/promote/:id', requireAuth, authorizeAdmin, adminController.verify_id(), adminController.promoteUser);
 
-router.post('/', requireAuth, authorizeAdmin, adminController.verifySearch(), adminController.searchUsers);
+router.post('/', userRoute, renderUnauthorized, adminController.verifySearch(), adminController.searchUsers);
 
 module.exports = router; 

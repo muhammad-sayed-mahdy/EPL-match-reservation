@@ -83,7 +83,7 @@ const promoteUser = (req, res)=>{
         res.json({redirect:"/admin"});
     })
     .catch((err)=>console.log(err));
-}
+};
 
 const deleteUser = (req, res) => {
     const errors = validationResult(req);
