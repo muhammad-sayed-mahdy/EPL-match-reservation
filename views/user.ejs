@@ -15,7 +15,7 @@
         <br>
         <h5>City of Birth: <%= user.city %> </h5>
         <br>
-        <h5>Date of Birth: <%= user.bdate %> </h5>
+        <h5>Date of Birth: <%= user.bdate ? user.bdate.toDateString() : "" %> </h5>
         <br>
         
         <br><br>
