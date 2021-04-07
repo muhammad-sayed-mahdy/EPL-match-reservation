@@ -15,6 +15,9 @@
             <%if (loggedInUser.role =="manager") {%>
                 <a class="btn btn-info" href="/matches/create" role="button">Create Event</a>
             <%}%>
+            <%if (loggedInUser.role =="user") {%>
+                <a class="btn btn-primary" href="/user/reservations" role="button">Reservations</a>
+            <%}%>
         </div>
     </div>
 </body>

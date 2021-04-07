@@ -1,0 +1,17 @@
+<%- include("./partials/head.ejs") %>
+<%- include("./partials/nav.ejs") %>
+
+<% if (reservations.length>0) { %>
+    <h2>Current Available Reservations</h2>
+    
+    <div class="list-group d-flex flex-wrap align-content-center">
+        <% reservations.forEach(reservation => { %>
+            <div class="d-flex w-100 justify-content-center">
+                <h4><%= reservation %> </h4>
+            </div>
+        <% }) %>
+        </div>
+<% } else { %>
+    <h3>There is nothing to display...</h3>
+    <% } %>
+        
