@@ -55,6 +55,8 @@ const checkUser = (req, res, next) => {
 const requireAuth = (req, res, next) => { 
     if (!req.user) {
         res.status(401).json({error: "The JWT token is invalid"});
+    } else if (!req.user.authorized) {
+        res.status(401).json({error: "Unauthorized"});
     } else {
         next();
     }
@@ -65,9 +67,11 @@ const requireAuth = (req, res, next) => {
 const userRoute = (req, res, next) => { 
     if (!req.user) {
         res.redirect('/login');
-        return;
+    } else if (!req.user.authorized) {
+        res.status(401).render('unauthorized', {title: "Unauthorized"});
+    } else {
+        next();
     }
-    next();
 };
 
 // expecting a guest to enter this route, if there is a user redirect to home
