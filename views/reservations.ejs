@@ -2,26 +2,28 @@
 <%- include("./partials/nav.ejs") %>
 
 <body>
-  <div class="container">
+  <div class="container" id="body-container">
 
     <form class="row g-3" id="<%=match._id%>" name="reservation_form">
-      <table class="table table-bordered">
-        <tbody>
-          <% for(var i = 0; i < match.stadium.length; ++i){ %>
-            <tr>
-              <% for(var j = 0; j < match.stadium.width; ++j){ %>
-                <% if(seats[i][j]){ %>
-                  <td style="background-color: red; text-align: center;" id="<%=i%> <%=j%>" > ( <%= i%> , <%= j%> ) </td>
-                <% } else { %>
-                  <td style="background-color: green; text-align: center;" id="<%=i%> <%=j%>" > ( <%= i%> , <%= j%> ) </td>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <tbody>
+            <% for(var i = 0; i < match.stadium.length; ++i){ %>
+              <tr>
+                <% for(var j = 0; j < match.stadium.width; ++j){ %>
+                  <% if(seats[i][j]){ %>
+                    <td style="background-color: red;" class="text-center" id="<%=i%> <%=j%>" >(<%=i%>,<%=j%>)</td>
+                  <% } else { %>
+                    <td style="background-color: green;" class="text-center" id="<%=i%> <%=j%>" >(<%=i%>,<%=j%>)</td>
+                  <% } %>
                 <% } %>
-              <% } %>
-            </tr>
-          <% } %>
-        </tbody>
-      </table>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
     </form>
-    <button type="submit" form="<%= match._id %> "> Reserve </button>
+    <input type="submit" value="Reserve" class="btn btn-primary" form="<%= match._id %>" >
 
   </div>
   <script type="module" src="/js/reservation.js"></script>

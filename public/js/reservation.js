@@ -1,7 +1,5 @@
-import {showErrors} from './common.js';
-
 const form = document.querySelector('[name = reservation_form]');
-const labels = document.querySelectorAll('label');
+const labels = document.querySelectorAll('td');
 
 form.addEventListener('click', (e) => {
     var x = e.target;
@@ -12,6 +10,24 @@ form.addEventListener('click', (e) => {
         x.style.backgroundColor = "green";
     }
 });
+
+const showErrors = (errors) => {
+    const bodyContainer = document.getElementById('body-container');
+    errors.forEach (err => {
+        const div = document.createElement('div');
+        div.className = "my-2 alert alert-danger alert-dismissible fade show";
+        div.innerText = "Error! " + err.msg;
+        
+        const button = document.createElement('button');
+        button.className = "close";
+        button.type = "button";
+        button.setAttribute('data-dismiss', "alert");
+        button.innerHTML = "&times;";
+        div.appendChild(button);    
+        
+        bodyContainer.appendChild(div);
+    });
+};
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -38,12 +54,11 @@ form.addEventListener('submit', (e) => {
         body: JSON.stringify(reqbody)
     })
     .then(res => {
-        console.log("touched");
         if (res.ok) {
             window.location.href = '/matches/' + form.id;
         } else {
             res.json().then (data => {
-                console.log(data);
+                showErrors(data.errors);
             });
         }
     })

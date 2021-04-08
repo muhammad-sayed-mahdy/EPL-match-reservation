@@ -47,10 +47,10 @@ const reserve_post = async (req, res) => {
 
     const data = lod.pick(req.body, ['id','x_i','y_i']);
     data.userId = req.user._id;
-    console.log(data);
+    
     if(data.x_i.length != data.y_i.length)
     {
-        res.status(400).json({"Error":"x and y arrays should be equal"});
+        res.status(400).json({ "errors": [{ msg: "x and y arrays should be equal" }] });
         return;
     }
     const session = await mongoose.startSession();
@@ -89,7 +89,7 @@ const reserve_post = async (req, res) => {
 
     } catch (error) {
         
-        res.status(400).send({"error":error.message});
+        res.status(400).json({ "errors": [{ "msg": error.message }] });
         
     }   
 

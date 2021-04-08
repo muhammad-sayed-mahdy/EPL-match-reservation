@@ -8,10 +8,10 @@
 
         <% matches.forEach(match => { %>
             <% match.reservations.forEach(reservation => { %>
-                <div class="d-flex w-100 justify-content-center" id = "<%=reservation.x_i%> <%= reservation.y_i %> <%= match._id %>">
+                <div class="d-flex w-100 justify-content-center"">
                     <h4>Seat: <%= reservation.x_i %> | <%= reservation.y_i %></h4>
                 </div>
-                <a class="update btn btn-danger" data-doc="<%=reservation._id%>">Cancel</a>
+                <a class="update btn btn-danger" data-reservation = "<%=reservation.x_i%> <%= reservation.y_i %> <%= match._id %>" >Cancel</a>
             <% }) %>
         <% }) %>
         </div>
@@ -23,18 +23,29 @@
     const trashcan_2 = document.querySelector("a.update");
     trashcan_2.addEventListener('click', (e)=>{
         const endpoint_2 = `/api/reservation/cancel`;
-        var res = e.id.split(" ");
+        var res = e.target.getAttribute('data-reservation').split(" ");
+        console.log(res);
         const reqbody = {
             'x_i': parseInt(res[0]),
             'y_i': parseInt(res[1]),
-            'id': parseInt(res[2])
+            'id': res[2]
         };
         fetch(endpoint_2,{
             method:'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(reqbody)
         })
-        .then((response)=>response.json())
-        .then((data)=>window.location.href = '/')
-        .catch((err)=>console.log(err));
+        .then(res => {
+            if (res.ok) {
+                window.location.href = '/';
+            } else {
+                res.json().then (data => {
+                    console.log(data);
+                });
+            }
+        })
+        .catch(err => console.error(err));
     });
 </script>

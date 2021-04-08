@@ -63,13 +63,15 @@
 
 <script>
     const trashcan = document.querySelector("a.delete");
-    trashcan.addEventListener('click', (e)=>{
-        const endpoint = `/matches/${trashcan.dataset.doc}`;
-        fetch(endpoint,{
-            method:'DELETE'
-        })
-        .then((response)=>response.json())
-        .then((data)=>window.location.href = data.redirect)
-        .catch((err)=>console.log(err));
-    });
+    if (trashcan) {
+        trashcan.addEventListener('click', (e)=>{
+            const endpoint = `/matches/${trashcan.dataset.doc}`;
+            fetch(endpoint,{
+                method:'DELETE'
+            })
+            .then((response)=>response.json())
+            .then((data)=>window.location.href = data.redirect)
+            .catch((err)=>console.log(err));
+        });
+    }
 </script>
