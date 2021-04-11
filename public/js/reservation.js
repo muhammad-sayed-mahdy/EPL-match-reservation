@@ -3,11 +3,13 @@ const labels = document.querySelectorAll('td');
 
 form.addEventListener('click', (e) => {
     var x = e.target;
-    if(x.style.backgroundColor === "green"){
-        x.style.backgroundColor = "gray";
+    if(x.classList.contains("btn-success")){
+        x.classList.remove("btn-success");
+        x.classList.add("btn-info");
     }
-    else if(x.style.backgroundColor === "gray"){
-        x.style.backgroundColor = "green";
+    else if(x.classList.contains("btn-info")){
+        x.classList.remove("btn-info");
+        x.classList.add("btn-success");
     }
 });
 
@@ -34,7 +36,7 @@ form.addEventListener('submit', (e) => {
     var xs = [];
     var ys = [];
     for (var i = 0; i < labels.length; i++) {
-        if(labels[i].style.backgroundColor === "gray"){
+        if(labels[i].classList.contains("btn-info")){
             var res = labels[i].id.split(" ");
             ys.push(parseInt(res[0]));
             xs.push(parseInt(res[1]));

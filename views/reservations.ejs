@@ -12,9 +12,9 @@
               <tr>
                 <% for(var j = 0; j < match.stadium.width; ++j){ %>
                   <% if(seats[i][j]){ %>
-                    <td style="background-color: red;" class="text-center" id="<%=i%> <%=j%>" >(<%=i%>,<%=j%>)</td>
+                    <td class="btn-danger disabled text-center" id="<%=i%> <%=j%>">(<%=i%>,<%=j%>)</td>
                   <% } else { %>
-                    <td style="background-color: green;" class="text-center" id="<%=i%> <%=j%>" >(<%=i%>,<%=j%>)</td>
+                    <td class="btn-success text-center" id="<%=i%> <%=j%>" >(<%=i%>,<%=j%>)</td>
                   <% } %>
                 <% } %>
               </tr>
